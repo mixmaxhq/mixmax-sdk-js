@@ -4,7 +4,6 @@
 set -e
 
 npm install
-
 npm install -g gulp
 
 # Upload to S3.
