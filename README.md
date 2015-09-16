@@ -1,4 +1,4 @@
-# Mixmax SDK Javascript snippet
+# Mixmax App JS SDK
 
 This repo is for our Mixmax App SDK Javascript snippet for use by third party apps (including our own emailapps.mixmax.com apps that loads this). See [documentation here](https://docs.google.com/document/d/12EqWZ3CV0aefpgvbBmqH4doZYx7TUsT7nJprRBBwrrs/) for how this is used by third party apps.
 
@@ -9,7 +9,6 @@ Run `npm start` to run the web server locally. Then point local Mixmax apps to u
 ## File structure
 
 `/src/` - Source directory that is uploaded (unmodified) to the CDN.
-
 
 ## Deployment
 
