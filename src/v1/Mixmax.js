@@ -1,9 +1,10 @@
 /**
- * The Mixmax App SDK. See documentation at http://sdk.mixmax.com
+ * The Mixmax App JS SDK. See documentation at http://sdk.mixmax.com
  */
 window.Mixmax = {
   /**
-   * When finished with this app window. Sends app parameters to the opener window.
+   * Call this when the user is finished with the app editor window. Pass the app parameters that
+   * be used to create an app instance.
    */
   done: function(params) {
     if (!window.opener) return;
