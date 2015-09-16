@@ -10,6 +10,7 @@ Run `npm start` to run the web server locally. Then point local Mixmax apps to u
 
 `/src/` - Source directory that is uploaded (unmodified) to the CDN.
 
+
 ## Deployment
 
 Merging into master will automatically deploy this project to production for everyone. There is no staging environment. Content in `/src/*` cannot be modified since it is permacached in the CDN. Only new content can be added. When making a change to the SDK script, you should first create a new version (e.g. `/src/v1.1/Mixmax.js`) and update the SDK documentation with the new snippet.
