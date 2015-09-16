@@ -1,0 +1,32 @@
+{
+  "name": "mixmax-sdk-js",
+  "version": "1.0.0",
+  "description": "Our SDK Javascript snippet that is published to a CDN and used by Mixmax apps.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mixmaxhq/mixmax-sdk-js.git"
+  },
+  "author": "Brad Vogel <brad@mixmax.com> (https://mixmax.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mixmaxhq/mixmax-sdk-js/issues"
+  },
+  "homepage": "https://github.com/mixmaxhq/mixmax-sdk-js",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-awspublish": "1.0.6",
+    "gulp-awspublish-router": "^0.1.1",
+    "gulp-declare": "^0.3.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-plumber": "^1.0.1",
+    "gulp-webserver": "^0.9.1",
+    "merge-stream": "^1.0.0",
+    "run-sequence": "^1.1.2",
+    "yargs": "^3.25.0"
+  }
+}

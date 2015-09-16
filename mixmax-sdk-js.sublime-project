@@ -1,0 +1,27 @@
+{
+  "folders": [{
+    "path": ".",
+    "folder_exclude_patterns": [
+      ".sass-cache",
+      "node_modules"
+    ],
+    "file_exclude_patterns": [
+      // Generated source maps.
+      "*.map",
+
+      // SASS cache files.
+      "*.scssc",
+
+      // Don't search minified javascript files.
+      "*.min.js"
+    ]
+  }],
+  "settings": {
+    "tab_size": 2,
+    "ensure_newline_at_eof_on_save": true,
+    "translate_tabs_to_spaces": true,
+    "trim_trailing_white_space_on_save": true,
+    "detect_indentation": false,
+    "rulers": [100]
+  }
+}
