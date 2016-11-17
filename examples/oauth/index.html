@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OAuth</title>
+  <script src="../../src/v1/Mixmax.js"></script>
+</head>
+<body>
+  <label>API Token: <input type="text" readonly name="apiToken"></label>
+  <button class="js-connect-to-mixmax">Connect to Mixmax</button>
+</body>
+<script src="https://cdn.jsdelivr.net/g/jquery@2.1.4"></script>
+<script type="text/javascript">
+  /* jshint esnext:true */
+  $('.js-connect-to-mixmax').click(() => {
+    Mixmax.connect()
+      .catch(() => alert('Could not connect to Mixmax'))
+      .then((apiToken) => {
+        $('[name="apiToken"]').val(apiToken);
+        return $.ajax({
+          url: 'https://api-local.mixmax.com/v1/snippets',
+          headers: {
+            'X-API-Token': apiToken
+          }
+        });
+      })
+      .then((templates) => console.log(templates));
+  });
+</script>
+</html>
