@@ -15,7 +15,6 @@ window.Mixmax = {
       // TODO(jeff): Pass client ID etc. Or probably just redirect server-side.
       var site = 'Test Site';
 
-      // ???(jeff): This doesn't conflict with Meteor's URL does it?
       var url = `https://app-local.mixmax.com/oauth?site=${encodeURIComponent(site)}`;
       var win = window.open(url, null /* No title */, `location=yes,toolbar=no,status=no,menubar=no,` +
         `width=${width},height=${height},top=${top},left=${left}`);
