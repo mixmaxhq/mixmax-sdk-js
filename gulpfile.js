@@ -8,7 +8,7 @@ var declare = require('gulp-declare');
 var plumber = require('gulp-plumber');
 var argv = require('yargs').argv;
 var runSequence = require('run-sequence');
-
+const concurrentTransform = require('concurrent-transform');
 
 // Upload to S3.
 gulp.task('upload', function() {
@@ -46,7 +46,8 @@ gulp.task('upload', function() {
         "^.+$": "$&"
       }
     }))
-    .pipe(publisher.publish())
+    // Upload up to 50 objects to S3 concurrently.
+    .pipe(concurrentTransform(publisher.publish(), 50))
     .pipe(awspublish.reporter());
 });
 
