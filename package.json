@@ -19,7 +19,7 @@
   "homepage": "https://github.com/mixmaxhq/mixmax-sdk-js",
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-awspublish": "1.0.6",
+    "gulp-awspublish": "^3.3.0",
     "gulp-awspublish-router": "^0.1.1",
     "gulp-declare": "^0.3.0",
     "gulp-jshint": "^1.11.2",

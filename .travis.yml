@@ -1,0 +1,29 @@
+# Use Trusty for a C++11 compiler, for our native dependencies:
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs/#Node.js-v4-(or-io.js-v3)-compiler-requirements
+dist: trusty
+# Containers for faster startup, also we don't need sudo.
+sudo: false
+
+language: node_js
+node_js: 6.9.1
+
+cache: yarn
+
+# Don’t build pushes to branches other than our deploy branch. (This doesn’t affect PR builds, which
+# are separate from branch builds in Travis. If we didn’t have this config, Travis would run both
+# types of builds for PRs, consuming our concurrent builds.)
+branches:
+  only:
+    - master
+
+# Bash noop.
+script: ':'
+
+deploy:
+  - provider: script
+    # Prevent Travis from resetting the files we've built and staged.
+    skip_cleanup: true
+    # This script is unique to this project.
+    script: build/build.sh
+    on:
+      all_branches: true
