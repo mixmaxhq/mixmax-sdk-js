@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mixmaxhq/mixmax-sdk-js",
   "devDependencies": {
+    "concurrent-transform": "^1.0.0",
     "gulp": "^3.9.0",
     "gulp-awspublish": "^3.3.0",
     "gulp-awspublish-router": "^0.1.1",
