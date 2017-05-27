@@ -12,14 +12,14 @@ var runSequence = require('run-sequence');
 
 // Upload to S3.
 gulp.task('upload', function() {
-  if (!process.env.AWS_S3_KEY || !process.env.AWS_S3_SECRET) {
+  if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
     throw new Error('Environment variables required.');
   }
 
   var publisher = awspublish.create({
-    key: process.env.AWS_S3_KEY,
-    secret: process.env.AWS_S3_SECRET,
-    bucket: 'mixmax-sdk-js'
+    params: {
+      Bucket: 'mixmax-sdk-js'
+    }
   });
 
   return gulp.src('./src/**/*')
