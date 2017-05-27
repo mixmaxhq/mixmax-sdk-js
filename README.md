@@ -4,7 +4,7 @@ This repo is for our Mixmax App SDK Javascript snippet for use by third party ap
 
 ## Running locally
 
-Run `npm start` to run the web server locally. Then point local Mixmax apps to use the snippet at path `http://localhost:9000/src/v1/Mixmax.js`.
+Run `yarn start` to run the web server locally. Then point local Mixmax apps to use the snippet at path `http://localhost:9000/src/v1/Mixmax.js`.
 
 ## File structure
 
