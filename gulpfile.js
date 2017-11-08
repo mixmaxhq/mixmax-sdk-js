@@ -1,14 +1,14 @@
 const _ = require('underscore');
-var gulp = require('gulp');
-var awspublish = require('gulp-awspublish');
-var awspublishRouter = require('gulp-awspublish-router');
-const MultiBuild = require('multibuild');
-var webserver = require('gulp-webserver');
-const del = require('del');
-var argv = require('yargs').argv;
-const rename = require('gulp-rename');
-var runSequence = require('run-sequence');
+const argv = require('yargs').argv;
+const awspublish = require('gulp-awspublish');
+const awspublishRouter = require('gulp-awspublish-router');
 const concurrentTransform = require('concurrent-transform');
+const del = require('del');
+const gulp = require('gulp');
+const MultiBuild = require('multibuild');
+const webserver = require('gulp-webserver');
+const rename = require('gulp-rename');
+const runSequence = require('run-sequence');
 
 
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
