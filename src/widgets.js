@@ -5,7 +5,7 @@ function loadCSS() {
     var css = document.createElement('link');
     css.setAttribute('rel', 'stylesheet');
     css.setAttribute('type', 'text/css');
-    css.setAttribute('href', `${Environment.assetsUrl}/mixmax.css`);
+    css.setAttribute('href', `${Environment.assetsUrl}/widgets.css`);
     css.onload = resolve;
     document.head.appendChild(css);
   });
