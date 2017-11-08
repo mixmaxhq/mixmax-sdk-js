@@ -1,5 +1,3 @@
-/* jshint esnext:true */
-
 /**
  * The Mixmax App JS SDK. See documentation at http://sdk.mixmax.com
  */

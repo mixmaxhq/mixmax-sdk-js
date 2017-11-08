@@ -2,20 +2,18 @@ const _ = require('underscore');
 var gulp = require('gulp');
 var awspublish = require('gulp-awspublish');
 var awspublishRouter = require('gulp-awspublish-router');
-var jshint = require('gulp-jshint');
-var merge = require('merge-stream');
 const MultiBuild = require('multibuild');
 var webserver = require('gulp-webserver');
-var declare = require('gulp-declare');
 const del = require('del');
-var plumber = require('gulp-plumber');
 var argv = require('yargs').argv;
 const rename = require('gulp-rename');
 var runSequence = require('run-sequence');
 const concurrentTransform = require('concurrent-transform');
 
+
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
 const VERSION = require('./package.json').version;
+
 
 // Upload to S3.
 gulp.task('upload', ['build'], function() {
@@ -29,7 +27,7 @@ gulp.task('upload', ['build'], function() {
     }
   });
 
-  return gulp.src(`dist/**/*`)
+  return gulp.src('dist/**/*')
     .pipe(rename({ dirname: `v${VERSION}` }))
     .pipe(awspublishRouter({
       cache: {
@@ -51,7 +49,7 @@ gulp.task('upload', ['build'], function() {
         },
 
         // pass-through for anything that wasn't matched by routes above, to be uploaded with default options
-        "^.+$": "$&"
+        '^.+$': '$&'
       }
     }))
     // Upload up to 50 objects to S3 concurrently.
@@ -72,6 +70,7 @@ const build = new MultiBuild({
   errorHandler(e) {
     if (ENVIRONMENT !== 'production') {
       // Keep watching for changes on failure.
+      // eslint-disable-next-line no-console
       console.error(e);
     } else {
       // Throw so that gulp exits.
@@ -79,7 +78,7 @@ const build = new MultiBuild({
     }
   },
   entry: (target) => {
-    const [name, format] = target.split('.');
+    const [name, ] = target.split('.');
     return `src/${name}.js`;
   },
   rollupOptions: (target) => {
@@ -110,7 +109,7 @@ gulp.task('build-assets', function() {
   // Building the assets (everything that's not JS) is just a matter of copying
   // them from the assets directory into `dist`.
   return gulp.src('assets/**/*').pipe(gulp.dest('dist'));
-})
+});
 
 gulp.task('build', function(done) {
   let tasks = [];
@@ -121,15 +120,6 @@ gulp.task('build', function(done) {
     tasks.push('clean', ['build-js', 'build-assets']);
   }
   runSequence(...tasks, done);
-});
-
-
-// Run JSHint.
-// TODO(jeff): Convert to ESLint.
-gulp.task('js-hint', function() {
-  return gulp.src(['src/**/*.js'])
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
 });
 
 
