@@ -16,17 +16,26 @@ branches:
   only:
     - master
 
-# Bash noop.
-script: ':'
+# Ready npm publish.
+script: 'yarn build-js'
 
 deploy:
-  - provider: script
-    # Prevent Travis from resetting the files we've built and staged.
+  - provider: npm
+    email: admin+mixmax-codeship-npm@mixmax.com
+    api_key:
+      secure: FCj0WT09y+mD5Jc7nadlKEikkUxMw+tFjyAiuJ7FAzrdmg9ijg+k7UyW6f4CTrxESdU+Ta21zFtHAqUyCZs3m5rgHsyA1ln5+qjb92SORn32CPTBbXyaEeWltUWhxCqUdAubZpCxr69XFSXGCoBJyDdKTk/Kxu/FNFTx5348Ld1ln5HMkQaJVaDpjdZgT9mNejoFazXJkdDMbFp3qt5I8c9PSel7RofeMKmkP7tZlytDic7bgO+mMyvpGRdRajFUzSTB+esGZk9uYkigT6AvJoWMBRbJqDEq9PsEsPZPkukipaWJjNtKJRc9Dj+1DhT5yCRLYo/lmAPP4lsPZpIWpSaDqijqBlIUcnnsAUIT9tgZpW/7OPwrWGXWYfixiBT2K3t0A2w6rUxZiQAtqy9Qw04Ih7TGmQBYhSFXO342y1gnURYHuX1pq7b+kbp2xUj7RHKo0KgMx/1DBXpJZWO7Wy6e0A1TTRMXidddNEMhYwyJVc/IjtGg46DTQLJVmrqsHTTxMDokKp94d83Vjz3r3eIuqRpqVevrnDu5MSY44osYqRZK62kvs5fBGmi/qOa2ph1coRxsUAgF4tT88d0jryUSRSODg5udc0BX3Q3lsch9GnH0c4rqVCmzvHbdxNo11UmmgmNpV+AGyCyEgY1XhYkgaslSgqbpkDBUwwBbpsM=
+    # Prevent Travis from resetting the build artifacts.
     skip_cleanup: true
-    # This script is unique to this project.
-    script: yarn upload
     on:
-      all_branches: true
+      tags: true
+      branch: master
+  - provider: script
+    # Prevent Travis from resetting the build artifacts.
+    skip_cleanup: true
+    script: yarn upload -- --use-prebuilt-js
+    on:
+      tags: true
+      branch: master
 
 notifications:
   slack:

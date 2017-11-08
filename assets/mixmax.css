@@ -31,6 +31,7 @@
   height: 18px;
   top: 4px;
   left: 4px;
+  /* TODO(jeff): Update this URL. */
   background: url(badge_1x.png) 0 0  no-repeat;
   background-size: 16px;
 }
