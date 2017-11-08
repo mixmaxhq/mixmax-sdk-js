@@ -1,5 +1,22 @@
 import Environment from '/utils/Environment';
 
+// Polyfills for IE11.
+import '/utils/polyfills';
+import { Promise } from 'es6-promise';
+
+// Main
+Promise.all([
+  loadCSS(),
+  documentReady()
+]).then(() => {
+  document.querySelectorAll('.mixmax-add-sequence-recipients-button')
+    .forEach(renderAddSequenceRecipientsButton);
+
+  closeFlyoutsOnClick();
+});
+
+
+// Utils
 function loadCSS() {
   return new Promise((resolve) => {
     var css = document.createElement('link');
@@ -8,6 +25,13 @@ function loadCSS() {
     css.setAttribute('href', `${Environment.assetsUrl}/widgets.css`);
     css.onload = resolve;
     document.head.appendChild(css);
+  });
+}
+
+function documentReady() {
+  return new Promise((resolve) => {
+    if (document.readyState === 'complete') resolve();
+    else window.addEventListener('DOMContentLoaded', resolve);
   });
 }
 
@@ -50,12 +74,3 @@ function closeFlyoutsOnClick() {
   });
 }
 
-Promise.all([
-  loadCSS(),
-  new Promise((resolve) => window.addEventListener('DOMContentLoaded', resolve))
-]).then(() => {
-  document.querySelectorAll('.mixmax-add-sequence-recipients-button')
-    .forEach(renderAddSequenceRecipientsButton);
-
-  closeFlyoutsOnClick();
-});

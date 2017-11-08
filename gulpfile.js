@@ -2,10 +2,13 @@ const _ = require('underscore');
 const argv = require('yargs').argv;
 const awspublish = require('gulp-awspublish');
 const awspublishRouter = require('gulp-awspublish-router');
+const babel = require('rollup-plugin-babel');
 const concurrentTransform = require('concurrent-transform');
+const commonjs = require('rollup-plugin-commonjs');
 const del = require('del');
 const gulp = require('gulp');
 const MultiBuild = require('multibuild');
+const nodeResolve = require('rollup-plugin-node-resolve');
 const webserver = require('gulp-webserver');
 const rename = require('gulp-rename');
 const replace = require('rollup-plugin-replace');
@@ -94,6 +97,34 @@ const build = new MultiBuild({
         replace({
           delimiters: ['{{', '}}'],
           VERSION
+        }),
+        nodeResolve(),
+        commonjs({
+          include: 'node_modules/**',
+          namedExports: {
+            'es6-promise': ['Promise']
+          }
+        }),
+        babel({
+          presets: _.compact([
+            /**
+             * Don't run the `es2015` transformations when developing in order to speed up
+             * incremental builds. Since all engineers run the latest version of Chrome when
+             * developing, we don't need the `es2015` transformations.
+             *
+             * Disable module transformation per https://github.com/rollup/rollup-plugin-babel#modules.
+             */
+            (ENVIRONMENT === 'development') ?  null : [ 'es2015', { modules: false } ],
+          ]),
+          plugins: [
+            'external-helpers'
+          ],
+          include: 'src/**/*.js',
+          /**
+           * Don't transpile node_modules because they should already be transpiled and skipping
+           * them will be faster.
+           */
+          exclude: ['node_modules/**']
         })
       ],
       format,
