@@ -39,6 +39,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-webserver": "^0.9.1",
     "multibuild": "^2.2.1",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-root-import": "^0.2.2",
     "run-sequence": "^1.1.2",
     "underscore": "^1.8.3",
     "yargs": "^3.25.0"

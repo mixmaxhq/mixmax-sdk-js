@@ -1,10 +1,11 @@
+import Environment from '/utils/Environment';
+
 function loadCSS() {
   return new Promise((resolve) => {
     var css = document.createElement('link');
     css.setAttribute('rel', 'stylesheet');
     css.setAttribute('type', 'text/css');
-    // TODO(jeff): Update this URL.
-    css.setAttribute('href', '../../src/v1/mixmax.css');
+    css.setAttribute('href', `${Environment.assetsUrl}/mixmax.css`);
     css.onload = resolve;
     document.head.appendChild(css);
   });

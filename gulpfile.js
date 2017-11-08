@@ -8,6 +8,8 @@ const gulp = require('gulp');
 const MultiBuild = require('multibuild');
 const webserver = require('gulp-webserver');
 const rename = require('gulp-rename');
+const replace = require('rollup-plugin-replace');
+const rootImport = require('rollup-plugin-root-import');
 const runSequence = require('run-sequence');
 
 
@@ -84,6 +86,16 @@ const build = new MultiBuild({
   rollupOptions: (target) => {
     const [name, format] = target.split('.');
     return {
+      plugins: [
+        rootImport({
+          root: `${__dirname}/src`,
+          extensions: '.js'
+        }),
+        replace({
+          delimiters: ['{{', '}}'],
+          VERSION
+        })
+      ],
       format,
       // No worries about users loading multiple submodules individually, Rollup will merge e.g.
       // `Mixmax.editor` and `Mixmax.widgets` into a single `Mixmax` module, because Rollup is awesome.
