@@ -24,7 +24,7 @@ deploy:
     # Prevent Travis from resetting the files we've built and staged.
     skip_cleanup: true
     # This script is unique to this project.
-    script: build/build.sh
+    script: yarn upload
     on:
       all_branches: true
 
