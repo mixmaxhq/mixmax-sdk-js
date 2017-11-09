@@ -43,7 +43,7 @@ function renderAddSequenceRecipientsButton(button) {
   var sequenceButton = document.createElement('div');
   sequenceButton.className = 'mixmax-add-to-sequence-wrapper  js-mixmax-add-to-sequence-wrapper';
   sequenceButton.innerHTML = `
-    <div class="btn  mixmax-btn-add-to-sequence  js-mixmax-add-to-sequence" tabindex="0">Add to Mixmax Sequence</div>
+    <div class="mixmax-btn  mixmax-btn-add-to-sequence  js-mixmax-add-to-sequence" tabindex="0">Add to Mixmax Sequence</div>
     <div class="mixmax-dropdown-sequences  js-mixmax-dropdown-sequences">
       <iframe class="mixmax-sequence-picker-iframe  js-mixmax-sequence-picker-iframe" src="${iframeUrl}"/>
     </div>
