@@ -38,7 +38,7 @@ function documentReady() {
 function renderAddSequenceRecipientsButton(button) {
   var getRecipientsFunction = window[button.getAttribute('data-recipients-function')];
 
-  var iframeUrl = 'https://compose.mixmax.com/sequence/picker';
+  var iframeUrl = `${Environment.composeUrl}/sequence/picker`;
   var sequenceButton = document.createElement('div');
   sequenceButton.className = 'mixmax-add-to-sequence-wrapper  js-mixmax-add-to-sequence-wrapper';
   sequenceButton.innerHTML = `

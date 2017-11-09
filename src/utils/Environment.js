@@ -17,6 +17,12 @@ class Environment {
       return 'http://localhost:9000/dist';
     }
   }
+
+  get composeUrl() {
+    // Not sure how to toggle a local vs. production environment.
+    // Will leave it to the developer to temporarily edit the source for now.
+    return 'https://compose.mixmax.com';
+  }
 }
 
 // When running from a client's website or Cloudfront.
