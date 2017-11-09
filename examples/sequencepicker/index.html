@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sequence Picker</title>
+    <script defer src="../../dist/widgets.umd.js"></script>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <td><b>Name</b></td>
+          <td><b>Email</b></td>
+          <td><b>Dog</b></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gail Kellberg</td>
+          <td>gail@example.com</td>
+          <td>Golden Retriever</td>
+        </tr>
+        <tr>
+          <td>Jeff Wear</td>
+          <td>jeff@example.com</td>
+          <td>Golden Retriever</td>
+        </tr>
+        <tr>
+          <td>Steven Wear</td>
+          <td>steven@example.com</td>
+          <td>Chihuahua</td>
+        </tr>
+      </tbody>
+    </table>
+    <button
+      class="mixmax-add-sequence-recipients-button"
+      data-recipients-function="getRecipients">
+      Export CSV
+    </button>
+  </body>
+  <script type="text/javascript">
+    /* eslint browser: true */
+    window.getRecipients = function(done) {
+      var table = document.querySelector('table');
+      var header = table.rows[0];
+      var recipients = [].slice.call(table.rows, 1)
+        .map((row) => {
+          return {
+            email: row.cells[1].innerText,
+            // TODO(jeff): Merge the email from the outer, it shouldn't need
+            // to be a variable too.
+            // https://app.asana.com/0/108743748063903/214518456534208
+            variables: [].reduce.call(row.cells, (vars, cell, i) => {
+              vars[header.cells[i].innerText] = cell.innerText;
+              return vars;
+            }, {}),
+            scheduledAt: false
+          };
+        });
+      done(recipients);
+    };
+  </script>
+</html>

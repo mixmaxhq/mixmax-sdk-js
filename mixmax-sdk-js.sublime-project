@@ -3,7 +3,8 @@
     "path": ".",
     "folder_exclude_patterns": [
       ".sass-cache",
-      "node_modules"
+      "node_modules",
+      "dist"
     ],
     "file_exclude_patterns": [
       // Generated source maps.
