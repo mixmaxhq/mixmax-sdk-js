@@ -130,7 +130,7 @@ const build = new MultiBuild({
       format,
       // No worries about users loading multiple submodules individually, Rollup will merge e.g.
       // `Mixmax.editor` and `Mixmax.widgets` into a single `Mixmax` module, because Rollup is awesome.
-      moduleName: name === 'Mixmax' ? 'Mixmax' : `Mixmax.${target}`,
+      moduleName: name === 'Mixmax' ? 'Mixmax' : `Mixmax.${name}`,
       // Only generate source maps when building for production in order to lower build times.
       sourceMap: (ENVIRONMENT === 'production')
     };
