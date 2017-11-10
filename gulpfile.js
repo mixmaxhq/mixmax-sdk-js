@@ -155,12 +155,11 @@ gulp.task('build-assets', function() {
 });
 
 gulp.task('build', function(done) {
-  let tasks = [];
   if (!argv['use-prebuilt']) {
     // If we've built already, we don't need to do anything.
-    tasks.push('clean', ['build-js', 'build-assets']);
+    runSequence('clean', ['build-js', 'build-assets'], done);
   }
-  runSequence(...tasks, done);
+  process.nextTick(done);
 });
 
 
