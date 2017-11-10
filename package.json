@@ -14,7 +14,7 @@
   "scripts": {
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-js": "gulp clean && gulp build-js",
+    "build": "gulp build",
     "upload": "env NODE_ENV=production gulp upload"
   },
   "repository": {

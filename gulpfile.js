@@ -156,10 +156,8 @@ gulp.task('build-assets', function() {
 
 gulp.task('build', function(done) {
   let tasks = [];
-  if (argv['use-prebuilt-js']) {
-    // If the JS was prebuilt, we shouldn't clean, and only need to build the assets.
-    tasks.push('build-assets');
-  } else {
+  if (!argv['use-prebuilt']) {
+    // If we've built already, we don't need to do anything.
     tasks.push('clean', ['build-js', 'build-assets']);
   }
   runSequence(...tasks, done);
