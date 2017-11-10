@@ -9,7 +9,7 @@ the snippet at path `http://localhost:9000/dist/editor.umd.js`.
 `/assets/` - Non-JS assets that are packaged with the current version of the SDK.
 `/dist/` - The destination directory for build output and assets. Not checked into Git.
 
-## Deployment
+## Deployment (for Mixmax engineers)
 
 Run [`npm-publish`](https://github.com/mixmaxhq/mixmax-runner/blob/master/scripts/npm-publish)
 _with the `--no-publish` flag_.

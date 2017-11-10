@@ -31,11 +31,11 @@
         </tr>
       </tbody>
     </table>
-    <button
+    <a
       class="mixmax-add-sequence-recipients-button"
       data-recipients-function="getRecipients">
       Export CSV
-    </button>
+    </a>
   </body>
   <script type="text/javascript">
     /* eslint browser: true */
@@ -46,9 +46,6 @@
         .map((row) => {
           return {
             email: row.cells[1].innerText,
-            // TODO(jeff): Merge the email from the outer, it shouldn't need
-            // to be a variable too.
-            // https://app.asana.com/0/108743748063903/214518456534208
             variables: [].reduce.call(row.cells, (vars, cell, i) => {
               vars[header.cells[i].innerText] = cell.innerText;
               return vars;
