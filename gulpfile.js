@@ -158,8 +158,9 @@ gulp.task('build', function(done) {
   if (!argv['use-prebuilt']) {
     // If we've built already, we don't need to do anything.
     runSequence('clean', ['build-js', 'build-assets'], done);
+  } else {
+    process.nextTick(done);
   }
-  process.nextTick(done);
 });
 
 
