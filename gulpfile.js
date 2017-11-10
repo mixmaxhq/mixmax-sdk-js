@@ -22,10 +22,6 @@ const VERSION = require('./package.json').version;
 
 // Upload to S3.
 gulp.task('upload', ['build'], function() {
-  if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
-    throw new Error('Environment variables required.');
-  }
-
   var publisher = awspublish.create({
     params: {
       Bucket: 'mixmax-sdk-js'
