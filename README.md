@@ -10,7 +10,7 @@ It exports a top level module called `Mixmax`, with submodules
 * `Mixmax.widgets`: APIs for embedding Mixmax functionality in your own website, currently the
 sequence picker as documented [here][sequence picker docs].
 
-If you are a interested in contributing to this repo, see [here][CONTRIBUTING.md].
+If you are interested in contributing to this repo, see [here][CONTRIBUTING.md].
 
 [Mixmax enhancement]: https://developer.mixmax.com/docs/overview-enhancement
 [Mixmax.editor docs]: https://developer.mixmax.com/docs/overview-enhancement#sdkjs
