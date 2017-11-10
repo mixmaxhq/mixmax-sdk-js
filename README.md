@@ -23,10 +23,8 @@ Travis will respond to the new tag being pushed to the remote by building the
 SDK and publishing the new version of the package to npm as well as to the CDN.
 
 CDN releases will be scoped under the directory `/v${VERSION}`. For instance,
-if you just released version 1.2.1, the new version will be available at
-https://d1xa36cy0xt122.cloudfront.net/v1/Mixmax.js.
+if you just released version 1.2.1, the overall UMD bundle will be available at
+https://d1xa36cy0xt122.cloudfront.net/v1.2.1/Mixmax.umd.js.
 
-
-TODO(jeff): Test that the CDN uploads are properly scoped.
 
 TODO(jeff): Update SDK documentation (including instructions for use with a bundler).
