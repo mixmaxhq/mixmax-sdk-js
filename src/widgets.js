@@ -40,6 +40,7 @@ function documentReady() {
 }
 
 function renderAddSequenceRecipientsButton(button) {
+  // Load the "add to sequence" button.
   var getRecipientsFunction = window[button.getAttribute('data-recipients-function')];
 
   var iframeUrl = `${Environment.composeUrl}/sequence/picker`;
@@ -51,20 +52,34 @@ function renderAddSequenceRecipientsButton(button) {
       <iframe class="mixmax-sequence-picker-iframe  js-mixmax-sequence-picker-iframe" src="${iframeUrl}"/>
     </div>
   `;
+  button.parentNode.insertBefore(sequenceButton, button);
+  button.parentNode.removeChild(button);
 
+
+  // Handle clicks on the "add to sequence" button.
+  const iframe = sequenceButton.querySelector('.js-mixmax-sequence-picker-iframe');
+  const iframeLoaded = new Promise((resolve) => iframe.addEventListener('load', resolve));
+
+  let latestRecipients;
   sequenceButton.addEventListener('click', () => {
     sequenceButton.querySelector('.js-mixmax-dropdown-sequences').classList.toggle('mixmax-opened');
 
     getRecipientsFunction((recipients) => {
-      sequenceButton.querySelector('.js-mixmax-sequence-picker-iframe').contentWindow.postMessage({
-        method: 'recipientsSelected',
-        payload: recipients
-      }, '*');
+      latestRecipients = recipients;
+
+      iframeLoaded.then(() => {
+        // Always post the latest recipients through, and then unset them, so we don't post multiple
+        // batches of recipients through if the user clicks multiple times before the iframe loads.
+        if (latestRecipients) {
+          iframe.contentWindow.postMessage({
+            method: 'recipientsSelected',
+            payload: latestRecipients
+          }, '*');
+          latestRecipients = null;
+        }
+      });
     });
   });
-
-  button.parentNode.insertBefore(sequenceButton, button);
-  button.parentNode.removeChild(button);
 }
 
 function closeFlyoutsOnClick() {
