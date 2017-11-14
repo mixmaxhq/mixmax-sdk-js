@@ -58,7 +58,16 @@ function renderAddSequenceRecipientsButton(button) {
 
   // Handle clicks on the "add to sequence" button.
   const iframe = sequenceButton.querySelector('.js-mixmax-sequence-picker-iframe');
-  const iframeLoaded = new Promise((resolve) => iframe.addEventListener('load', resolve));
+  const iframeReadyToReceive = new Promise((resolve) => {
+    window.addEventListener('message', function messageListener(e) {
+      if (e.source !== iframe.contentWindow) return;
+
+      if (e.data.method === 'readyToReceiveRecipients') {
+        window.removeEventListener('message', messageListener);
+        resolve();
+      }
+    });
+  });
 
   let latestRecipients;
   sequenceButton.addEventListener('click', () => {
@@ -67,7 +76,7 @@ function renderAddSequenceRecipientsButton(button) {
     getRecipientsFunction((recipients) => {
       latestRecipients = recipients;
 
-      iframeLoaded.then(() => {
+      iframeReadyToReceive.then(() => {
         // Always post the latest recipients through, and then unset them, so we don't post multiple
         // batches of recipients through if the user clicks multiple times before the iframe loads.
         if (latestRecipients) {
