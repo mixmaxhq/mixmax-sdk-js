@@ -9,10 +9,11 @@ Promise.all([
   loadCSS(),
   documentReady()
 ]).then(() => {
-  document.querySelectorAll('.mixmax-add-sequence-recipients-button')
-    .forEach(renderAddSequenceRecipientsButton);
-
-  closeFlyoutsOnClick();
+  const buttons = document.querySelectorAll('.mixmax-add-sequence-recipients-button');
+  if (buttons.length) {
+    buttons.forEach(renderAddSequenceRecipientsButton);
+    closeFlyoutsOnClick();
+  }
 });
 
 
