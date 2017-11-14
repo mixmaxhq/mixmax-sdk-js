@@ -14,6 +14,9 @@ Promise.all([
     buttons.forEach(renderAddSequenceRecipientsButton);
     closeFlyoutsOnClick();
   }
+}).catch((e) => {
+  // eslint-disable-next-line no-console
+  console.error('[Mixmax] Could not initialize sequence picker widget:', e);
 });
 
 
