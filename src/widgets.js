@@ -58,20 +58,25 @@ function renderAddSequenceRecipientsButton(button) {
 
   // Handle clicks on the "add to sequence" button.
   const iframe = sequenceButton.querySelector('.js-mixmax-sequence-picker-iframe');
+  const dropdown = sequenceButton.querySelector('.js-mixmax-dropdown-sequences');
   const iframeReadyToReceive = new Promise((resolve) => {
-    window.addEventListener('message', function messageListener(e) {
+    window.addEventListener('message', (e) => {
       if (e.source !== iframe.contentWindow) return;
 
-      if (e.data.method === 'readyToReceiveRecipients') {
-        window.removeEventListener('message', messageListener);
-        resolve();
+      switch (e.data.method) {
+        case 'readyToReceiveRecipients':
+          resolve();
+          break;
+        case 'sequenceSelected':
+          dropdown.classList.remove('mixmax-opened');
+          break;
       }
     });
   });
 
   let latestRecipients;
   sequenceButton.addEventListener('click', () => {
-    sequenceButton.querySelector('.js-mixmax-dropdown-sequences').classList.toggle('mixmax-opened');
+    dropdown.classList.add('mixmax-opened');
 
     getRecipientsFunction((recipients) => {
       latestRecipients = recipients;
