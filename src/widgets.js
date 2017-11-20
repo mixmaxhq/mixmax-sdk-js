@@ -48,8 +48,9 @@ export function load() {
 
 // Automatically load the widgets if this file has been loaded directly using a script tag.
 // Otherwise, we assume that the developer has loaded this along with other stuff and/or using a
-// bundler and leave it to them to load the widgets.
-const loadedDirectly = !!document.querySelector(`script[src="${Environment.assetsUrl}/widgets.umd.js"]`);
+// bundler and leave it to them to load the widgets. Note that we don't complete the file extension
+// to support matching on both the minified and unminified scripts.
+const loadedDirectly = !!document.querySelector(`script[src^="${Environment.assetsUrl}/widgets.umd."]`);
 if (loadedDirectly) {
   load().catch((e) => {
     // eslint-disable-next-line no-console
