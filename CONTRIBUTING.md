@@ -19,4 +19,4 @@ SDK and publishing the new version of the package to npm as well as to the CDN.
 
 CDN releases will be scoped under the directory `/v${VERSION}`. For instance,
 if you just released version 1.2.1, the overall UMD bundle will be available at
-https://d1xa36cy0xt122.cloudfront.net/v1.2.1/Mixmax.umd.js.
+https://sdk.mixmax.com/v1.2.1/Mixmax.umd.js.
