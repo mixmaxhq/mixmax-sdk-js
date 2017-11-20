@@ -12,7 +12,7 @@ class Environment {
   get assetsUrl() {
     if (this.is(Environment.PRODUCTION)) {
       // The version is substituted in at build time.
-      return 'https://d1xa36cy0xt122.cloudfront.net/v{{VERSION}}';
+      return 'https://sdk.mixmax.com/v{{VERSION}}';
     } else {
       return 'http://localhost:9000/dist';
     }

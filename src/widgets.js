@@ -1,27 +1,14 @@
 import Environment from '/utils/Environment';
+import { once } from '/utils/functions';
 
 // Polyfills for IE11.
 import '/utils/polyfills';
 import { Promise } from 'es6-promise';
 
-// Main
-Promise.all([
-  loadCSS(),
-  documentReady()
-]).then(() => {
-  const buttons = document.querySelectorAll('.mixmax-add-sequence-recipients-button');
-  if (buttons.length) {
-    buttons.forEach(renderAddSequenceRecipientsButton);
-    closeFlyoutsOnClick();
-  }
-}).catch((e) => {
-  // eslint-disable-next-line no-console
-  console.error('[Mixmax] Could not initialize sequence picker widget:', e);
-});
-
+import loadSequencePickers from '/widgets/sequencePicker';
 
 // Utils
-function loadCSS() {
+const loadCSS = once(() => {
   return new Promise((resolve) => {
     var css = document.createElement('link');
     css.setAttribute('rel', 'stylesheet');
@@ -30,74 +17,43 @@ function loadCSS() {
     css.onload = resolve;
     document.head.appendChild(css);
   });
-}
+});
 
-function documentReady() {
+const documentReady = once(() => {
   return new Promise((resolve) => {
     if (document.readyState === 'complete') resolve();
     else window.addEventListener('DOMContentLoaded', resolve);
   });
-}
+});
 
-function renderAddSequenceRecipientsButton(button) {
-  // Load the "add to sequence" button.
-  var getRecipientsFunction = window[button.getAttribute('data-recipients-function')];
-
-  var iframeUrl = `${Environment.composeUrl}/sequence/picker`;
-  var sequenceButton = document.createElement('div');
-  sequenceButton.className = 'mixmax-add-to-sequence-wrapper  js-mixmax-add-to-sequence-wrapper';
-  sequenceButton.innerHTML = `
-    <div class="mixmax-btn  mixmax-btn-add-to-sequence" tabindex="0">Add to Mixmax Sequence</div>
-    <div class="mixmax-dropdown-sequences  js-mixmax-dropdown-sequences">
-      <iframe class="mixmax-sequence-picker-iframe  js-mixmax-sequence-picker-iframe" src="${iframeUrl}"/>
-    </div>
-  `;
-  button.parentNode.insertBefore(sequenceButton, button);
-  button.parentNode.removeChild(button);
-
-
-  // Handle clicks on the "add to sequence" button.
-  const iframe = sequenceButton.querySelector('.js-mixmax-sequence-picker-iframe');
-  const iframeReadyToReceive = new Promise((resolve) => {
-    window.addEventListener('message', function messageListener(e) {
-      if (e.source !== iframe.contentWindow) return;
-
-      if (e.data.method === 'readyToReceiveRecipients') {
-        window.removeEventListener('message', messageListener);
-        resolve();
-      }
-    });
-  });
-
-  let latestRecipients;
-  sequenceButton.addEventListener('click', () => {
-    sequenceButton.querySelector('.js-mixmax-dropdown-sequences').classList.toggle('mixmax-opened');
-
-    getRecipientsFunction((recipients) => {
-      latestRecipients = recipients;
-
-      iframeReadyToReceive.then(() => {
-        // Always post the latest recipients through, and then unset them, so we don't post multiple
-        // batches of recipients through if the user clicks multiple times before the iframe loads.
-        if (latestRecipients) {
-          iframe.contentWindow.postMessage({
-            method: 'recipientsSelected',
-            payload: latestRecipients
-          }, '*');
-          latestRecipients = null;
-        }
-      });
-    });
+/**
+ * Load all widgets.
+ *
+ * May be called multiple times.
+ *
+ * Note: even though this is the only export from this file at the present,
+ * we must export it as a named, not default, export to support UMD bundling--
+ * Rollup will export it as `Mixmax.widgets.default` otherwise.
+ *
+ * @return {Promise} A promise that resolves when all widgets have been loaded.
+ */
+export function load() {
+  return Promise.all([
+    loadCSS(),
+    documentReady()
+  ]).then(() => {
+    loadSequencePickers();
   });
 }
 
-function closeFlyoutsOnClick() {
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.js-mixmax-add-to-sequence-wrapper')) {
-      document.querySelectorAll('.js-mixmax-dropdown-sequences').forEach((dropdown) => {
-        dropdown.classList.remove('mixmax-opened');
-      });
-    }
+// Automatically load the widgets if this file has been loaded directly using a script tag.
+// Otherwise, we assume that the developer has loaded this along with other stuff and/or using a
+// bundler and leave it to them to load the widgets. Note that we don't complete the file extension
+// to support matching on both the minified and unminified scripts.
+const loadedDirectly = !!document.querySelector(`script[src^="${Environment.assetsUrl}/widgets.umd."]`);
+if (loadedDirectly) {
+  load().catch((e) => {
+    // eslint-disable-next-line no-console
+    console.error('[Mixmax] Could not initialize widgets:', e);
   });
 }
-
