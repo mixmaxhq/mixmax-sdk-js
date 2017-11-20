@@ -7,6 +7,7 @@ const concurrentTransform = require('concurrent-transform');
 const commonjs = require('rollup-plugin-commonjs');
 const del = require('del');
 const gulp = require('gulp');
+const gulpif = require('gulp-if');
 const MultiBuild = require('multibuild');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const webserver = require('gulp-webserver');
@@ -14,6 +15,8 @@ const rename = require('gulp-rename');
 const replace = require('rollup-plugin-replace');
 const rootImport = require('rollup-plugin-root-import');
 const runSequence = require('run-sequence');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify-es').default;
 
 
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
@@ -61,13 +64,32 @@ gulp.task('upload', ['build'], function() {
 
 gulp.task('clean', () => del('dist'));
 
+function formatTargets(targets) {
+  return _.chain(targets)
+    .map((name) => {
+      // Generate both UMD (global/CommonJS) modules and ES modules.
+      return [`${name}.umd`, `${name}.es`];
+    })
+    .flatten()
+    .map((target) => {
+      // Generate minified versions in production.
+      if (ENVIRONMENT === 'production') {
+        return [target, `${target}.min`];
+      } else {
+        return target;
+      }
+    })
+    .flatten()
+    .value();
+}
+
 const build = new MultiBuild({
   gulp,
-  targets: _.flatten([
+  targets: formatTargets([
     'Mixmax',
     'editor',
     'widgets'
-  ].map((name) => [`${name}.umd`, `${name}.es`])),
+  ]),
   errorHandler(e) {
     if (ENVIRONMENT !== 'production') {
       // Keep watching for changes on failure.
@@ -83,7 +105,7 @@ const build = new MultiBuild({
     return `src/${name}.js`;
   },
   rollupOptions: (target) => {
-    const [name, format] = target.split('.');
+    const [name, format, ] = target.split('.');
     return {
       plugins: [
         rootImport({
@@ -128,16 +150,25 @@ const build = new MultiBuild({
       // `Mixmax.editor` and `Mixmax.widgets` into a single `Mixmax` module, because Rollup is awesome.
       moduleName: name === 'Mixmax' ? 'Mixmax' : `Mixmax.${name}`,
       // Only generate source maps when building for production in order to lower build times.
+      // Note that we generate sourcemaps even for the non-minified targets since we transpile.
       sourceMap: (ENVIRONMENT === 'production')
     };
   },
   output: (target, input) => {
-    const [name, format] = target.split('.');
+    let [name, format, min] = target.split('.');
+
+    // `min` must be a boolean, otherwise `gulp-if` will decide it's a regex against which to match
+    // file names: https://github.com/robrich/gulp-match/blob/a1049b4/index.js#L18
+    min = !!min;
+
     return input
+      .pipe(gulpif(min, sourcemaps.init({ loadMaps: true })))
+      .pipe(gulpif(min, uglify({ compress: true })))
       .pipe(rename({
         basename: name,
-        extname: `.${format}.js`
+        extname: `.${format}${min ? '.min' : ''}.js`
       }))
+      .pipe(gulpif(min, sourcemaps.write('.')))
       .pipe(gulp.dest('dist'));
   }
 });
