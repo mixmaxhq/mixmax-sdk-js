@@ -1,5 +1,7 @@
 ## Release History
 
+* 1.1.5 Use the Promise polyfill everywhere
+
 * 1.1.4 Miscellaneous fixes ([#11](https://github.com/mixmaxhq/mixmax-sdk-js/pull/11))
 
 * 1.1.3 Wait until the sequence picker iframe loads and logs in before trying to select recipients
