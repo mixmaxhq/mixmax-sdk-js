@@ -1,6 +1,9 @@
 import Environment from '/utils/Environment';
 import { once } from '/utils/functions';
 
+// Polyfill for IE11.
+import { Promise } from 'es6-promise';
+
 function renderAddSequenceRecipientsButton(button) {
   // Load the "add to sequence" button.
   var getRecipientsFunction = window[button.getAttribute('data-recipients-function')];
