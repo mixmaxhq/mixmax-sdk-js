@@ -1,5 +1,7 @@
 ## Release History
 
+* 1.1.6 Improvements to sequence picker styling
+
 * 1.1.5 Use the Promise polyfill everywhere
 
 * 1.1.4 Miscellaneous fixes ([#11](https://github.com/mixmaxhq/mixmax-sdk-js/pull/11))
