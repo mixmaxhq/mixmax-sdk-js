@@ -9,10 +9,14 @@ class Environment {
     return this.get() === env;
   }
 
+  get version() {
+    // The version is substituted in at build time.
+    return '{{VERSION}}';
+  }
+
   get assetsUrl() {
     if (this.is(Environment.PRODUCTION)) {
-      // The version is substituted in at build time.
-      return 'https://sdk.mixmax.com/v{{VERSION}}';
+      return `https://sdk.mixmax.com/v${this.version}`;
     } else {
       return 'http://localhost:9000/dist';
     }

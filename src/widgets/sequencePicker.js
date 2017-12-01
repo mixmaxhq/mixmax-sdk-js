@@ -8,8 +8,8 @@ function renderAddSequenceRecipientsButton(button) {
   // Load the "add to sequence" button.
   const getRecipientsFunction = window[button.getAttribute('data-recipients-function')];
 
-  const buttonUrl = `${Environment.composeUrl}/sequence/picker/button`;
-  const pickerUrl = `${Environment.composeUrl}/sequence/picker`;
+  const buttonUrl = `${Environment.composeUrl}/sequence/picker/button?version=${encodeURIComponent(Environment.version)}`;
+  const pickerUrl = `${Environment.composeUrl}/sequence/picker?version=${encodeURIComponent(Environment.version)}`;
   const sequenceButton = document.createElement('div');
   sequenceButton.className = 'mixmax-add-to-sequence-wrapper  js-mixmax-add-to-sequence-wrapper';
   sequenceButton.innerHTML = `
