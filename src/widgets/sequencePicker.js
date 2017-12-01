@@ -13,7 +13,7 @@ function renderAddSequenceRecipientsButton(button) {
   const sequenceButton = document.createElement('div');
   sequenceButton.className = 'mixmax-add-to-sequence-wrapper  js-mixmax-add-to-sequence-wrapper';
   sequenceButton.innerHTML = `
-    <iframe class="mixmax-sequence-picker-button-iframe js-mixmax-sequence-picker-button-iframe"
+    <iframe style="display:none;" class="mixmax-sequence-picker-button-iframe js-mixmax-sequence-picker-button-iframe"
       src="${buttonUrl}" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
     <div class="mixmax-dropdown-sequences  js-mixmax-dropdown-sequences">
       <iframe class="mixmax-sequence-picker-iframe  js-mixmax-sequence-picker-iframe" src="${pickerUrl}"/>
@@ -62,6 +62,8 @@ function renderAddSequenceRecipientsButton(button) {
           case 'resize':
             buttonIframe.style.height = e.data.payload.height;
             buttonIframe.style.width = e.data.payload.width;
+            // Show the iframe now that it's sized, so the user doesn't see any popping.
+            buttonIframe.style.display = 'inline';
             break;
         }
         break;
