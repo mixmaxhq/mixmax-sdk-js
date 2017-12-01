@@ -6,15 +6,17 @@ import { Promise } from 'es6-promise';
 
 function renderAddSequenceRecipientsButton(button) {
   // Load the "add to sequence" button.
-  var getRecipientsFunction = window[button.getAttribute('data-recipients-function')];
+  const getRecipientsFunction = window[button.getAttribute('data-recipients-function')];
 
-  var iframeUrl = `${Environment.composeUrl}/sequence/picker`;
-  var sequenceButton = document.createElement('div');
+  const buttonUrl = `${Environment.composeUrl}/sequence/picker/button?version=${encodeURIComponent(Environment.version)}`;
+  const pickerUrl = `${Environment.composeUrl}/sequence/picker?version=${encodeURIComponent(Environment.version)}`;
+  const sequenceButton = document.createElement('div');
   sequenceButton.className = 'mixmax-add-to-sequence-wrapper  js-mixmax-add-to-sequence-wrapper';
   sequenceButton.innerHTML = `
-    <div class="mixmax-btn  mixmax-btn-add-to-sequence" tabindex="0">Add to Mixmax Sequence</div>
+    <iframe style="display:none;" class="mixmax-sequence-picker-button-iframe js-mixmax-sequence-picker-button-iframe"
+      src="${buttonUrl}" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
     <div class="mixmax-dropdown-sequences  js-mixmax-dropdown-sequences">
-      <iframe class="mixmax-sequence-picker-iframe  js-mixmax-sequence-picker-iframe" src="${iframeUrl}"/>
+      <iframe class="mixmax-sequence-picker-iframe  js-mixmax-sequence-picker-iframe" src="${pickerUrl}"/>
     </div>
   `;
   button.parentNode.insertBefore(sequenceButton, button);
@@ -22,35 +24,25 @@ function renderAddSequenceRecipientsButton(button) {
 
 
   // Handle clicks on the "add to sequence" button.
-  const iframe = sequenceButton.querySelector('.js-mixmax-sequence-picker-iframe');
+  const buttonIframe = sequenceButton.querySelector('.js-mixmax-sequence-picker-button-iframe');
+  const pickerIframe = sequenceButton.querySelector('.js-mixmax-sequence-picker-iframe');
   const dropdown = sequenceButton.querySelector('.js-mixmax-dropdown-sequences');
-  const iframeReadyToReceive = new Promise((resolve) => {
-    window.addEventListener('message', (e) => {
-      if (e.source !== iframe.contentWindow) return;
 
-      switch (e.data.method) {
-        case 'readyToReceiveRecipients':
-          resolve();
-          break;
-        case 'sequenceSelected':
-          dropdown.classList.remove('mixmax-opened');
-          break;
-      }
-    });
-  });
+  let setPickerIframeReadyToReceive;
+  const pickerIframeReadyToReceive = new Promise((resolve) => setPickerIframeReadyToReceive = resolve);
 
   let latestRecipients;
-  sequenceButton.addEventListener('click', () => {
+  function buttonClicked() {
     dropdown.classList.add('mixmax-opened');
 
     getRecipientsFunction((recipients) => {
       latestRecipients = recipients;
 
-      iframeReadyToReceive.then(() => {
+      pickerIframeReadyToReceive.then(() => {
         // Always post the latest recipients through, and then unset them, so we don't post multiple
         // batches of recipients through if the user clicks multiple times before the iframe loads.
         if (latestRecipients) {
-          iframe.contentWindow.postMessage({
+          pickerIframe.contentWindow.postMessage({
             method: 'recipientsSelected',
             payload: latestRecipients
           }, '*');
@@ -58,6 +50,35 @@ function renderAddSequenceRecipientsButton(button) {
         }
       });
     });
+  }
+
+  window.addEventListener('message', (e) => {
+    switch (e.source) {
+      case buttonIframe.contentWindow:
+        switch (e.data.method) {
+          case 'click':
+            buttonClicked();
+            break;
+          case 'resize':
+            buttonIframe.style.height = e.data.payload.height;
+            buttonIframe.style.width = e.data.payload.width;
+            // Show the iframe now that it's sized, so the user doesn't see any popping.
+            buttonIframe.style.display = 'inline';
+            break;
+        }
+        break;
+
+      case pickerIframe.contentWindow:
+        switch (e.data.method) {
+          case 'readyToReceiveRecipients':
+            setPickerIframeReadyToReceive();
+            break;
+          case 'sequenceSelected':
+            dropdown.classList.remove('mixmax-opened');
+            break;
+        }
+        break;
+    }
   });
 }
 
