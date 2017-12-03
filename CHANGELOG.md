@@ -1,5 +1,7 @@
 ## Release History
 
+* 1.2.0 Move the sequence picker button into an iframe
+
 * 1.1.6 Improvements to sequence picker styling
 
 * 1.1.5 Use the Promise polyfill everywhere
