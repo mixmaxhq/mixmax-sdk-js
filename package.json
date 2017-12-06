@@ -13,9 +13,10 @@
   ],
   "scripts": {
     "start": "gulp",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "wdio wdio.conf.js",
     "build": "gulp build",
-    "upload": "env NODE_ENV=production gulp upload"
+    "upload": "env NODE_ENV=production gulp upload",
+    "ci": "yarn build && yarn test"
   },
   "repository": {
     "type": "git",
@@ -53,7 +54,10 @@
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-root-import": "^0.2.2",
     "run-sequence": "^1.1.2",
+    "selenium-standalone": "^6.12.0",
     "underscore": "^1.8.3",
+    "wdio-mocha-framework": "^0.5.11",
+    "webdriverio": "^4.9.11",
     "yargs": "^3.25.0"
   },
   "publishConfig": {
