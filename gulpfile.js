@@ -88,7 +88,8 @@ const build = new MultiBuild({
   targets: formatTargets([
     'Mixmax',
     'editor',
-    'widgets'
+    'widgets',
+    'sidebar'
   ]),
   errorHandler(e) {
     if (ENVIRONMENT !== 'production') {
