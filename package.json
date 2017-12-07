@@ -6,7 +6,8 @@
   "module": "dist/Mixmax.es.js",
   "browser": {
     "./editor": "dist/editor.es.js",
-    "./widgets": "dist/widgets.es.js"
+    "./widgets": "dist/widgets.es.js",
+    "./sidebar": "dist/sidebar.es.js"
   },
   "files": [
     "dist"
@@ -28,7 +29,8 @@
   },
   "homepage": "https://github.com/mixmaxhq/mixmax-sdk-js",
   "dependencies": {
-    "es6-promise": "^4.1.1"
+    "es6-promise": "^4.1.1",
+    "eventemitter3": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
