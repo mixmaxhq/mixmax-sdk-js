@@ -17,6 +17,7 @@ const rootImport = require('rollup-plugin-root-import');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify-es').default;
+const webdriver = require('gulp-webdriver');
 
 
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
@@ -204,6 +205,19 @@ gulp.task('webserver', function() {
       directoryListing: true,
       port: 9000
     }));
+});
+
+
+gulp.task('webdriver', function() {
+  return gulp.src('wdio.conf.js').pipe(webdriver());
+});
+
+
+gulp.task('test:e2e', function(cb) {
+  runSequence(
+    'build',
+    ['webserver', 'webdriver'],
+    cb);
 });
 
 

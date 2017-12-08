@@ -12,17 +12,4 @@ node_js: 6.9.1
 
 cache: yarn
 
-before_script:
-  # # update npm
-  # - npm install -g npm
-  # - npx selenium-standalone install
-  # - 'sh -e /etc/init.d/xvfb start'
-  # # give xvfb some time to start
-  # - sleep 3
-  # - npx selenium-standalone start 2>/dev/null &
-  # # give selenium server some time to start
-  # - sleep 5
-  # start the gulp webserver for testing
-  - yarn start &
-
 script: 'yarn ci'
