@@ -201,17 +201,14 @@ gulp.task('watch', function() {
 
 
 // Runs a local webserver.
+let ws;
 gulp.task('webserver', function() {
-  gulp.src('.')
+  // Expose the webserver so we can kill it later (see below).
+  ws = gulp.src('.')
     .pipe(webserver({
       directoryListing: true,
       port: 9000
-    })).on('end', function() {
-      // If the stream ends, kill the webserver. We do this in particular for test:e2e, where the
-      // webdriver will fail if the tests fail. When this happens, we want to have gulp exit,
-      // because the testing is over.
-      this.emit('kill');
-    });
+    }));
 });
 
 
@@ -229,7 +226,13 @@ gulp.task('webdriver', function() {
         cb(!err && res.statusCode === 200);
       });
     }))
-    .pipe(webdriver());
+    .pipe(webdriver())
+    .on('end', function() {
+      // If the stream ends, kill the webserver. We do this in particular for test:e2e, where the
+      // webdriver will fail if the tests fail. When this happens, we want to have gulp exit,
+      // because the testing is over.
+      ws.emit('kill');
+    });
 });
 
 
