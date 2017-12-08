@@ -18,6 +18,8 @@ const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify-es').default;
 const webdriver = require('gulp-webdriver');
+const waitFor = require('gulp-waitfor');
+const request = require('request');
 
 
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
@@ -214,7 +216,20 @@ gulp.task('webserver', function() {
 
 
 gulp.task('webdriver', function() {
-  return gulp.src('wdio.conf.js').pipe(webdriver());
+  return gulp
+    .src('wdio.conf.js')
+    // Repeatedly attempt to connect to the gulp-webserver. Gives up after a minute, by default.
+    // This ensures that our sauce labs tests can reach the webserver.
+    .pipe(waitFor((cb) => {
+      request({
+        url: 'http://localhost:9000',
+        method: 'HEAD',
+        timeout: 5 * 1000
+      }, (err, res) => {
+        cb(!err && res.statusCode === 200);
+      });
+    }))
+    .pipe(webdriver());
 });
 
 
