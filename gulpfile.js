@@ -204,7 +204,12 @@ gulp.task('webserver', function() {
     .pipe(webserver({
       directoryListing: true,
       port: 9000
-    }));
+    })).on('end', function() {
+      // If the stream ends, kill the webserver. We do this in particular for test:e2e, where the
+      // webdriver will fail if the tests fail. When this happens, we want to have gulp exit,
+      // because the testing is over.
+      this.emit('kill');
+    });
 });
 
 
