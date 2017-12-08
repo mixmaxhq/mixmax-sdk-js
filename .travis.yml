@@ -4,21 +4,25 @@ dist: trusty
 # Containers for faster startup, also we don't need sudo.
 sudo: false
 
+addons:
+  sauce_connect: true
+
 language: node_js
 node_js: 6.9.1
 
 cache: yarn
 
-env:
-  global:
-    - DISPLAY=:99.0
-
 before_script:
-  # update npm
-  - npm install -g npm
-  - npx selenium-standalone install
-  - 'sh -e /etc/init.d/xvfb start'
-  - sleep 3 # give xvfb some time to start
-  - npx selenium-standalone start &
+  # # update npm
+  # - npm install -g npm
+  # - npx selenium-standalone install
+  # - 'sh -e /etc/init.d/xvfb start'
+  # # give xvfb some time to start
+  # - sleep 3
+  # - npx selenium-standalone start 2>/dev/null &
+  # # give selenium server some time to start
+  # - sleep 5
+  # start the gulp webserver for testing
+  - yarn start &
 
 script: 'yarn ci'

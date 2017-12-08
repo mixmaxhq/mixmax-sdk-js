@@ -35,6 +35,7 @@
     "babel-core": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.2",
     "concurrent-transform": "^1.0.0",
     "del": "^3.0.0",
     "eslint": ">=3",
