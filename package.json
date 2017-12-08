@@ -38,6 +38,7 @@
     "chai": "^4.1.2",
     "concurrent-transform": "^1.0.0",
     "del": "^3.0.0",
+    "detonate-object": "^0.1.1",
     "eslint": ">=3",
     "eslint-config-mixmax": "^0.10.0",
     "gulp": "^3.9.1",
