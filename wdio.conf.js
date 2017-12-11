@@ -71,6 +71,7 @@ exports.config = {
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
+  services: ['sauce'],
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd'
@@ -92,7 +93,7 @@ if (isTravis) {
   }));
 } else {
   Object.assign(exports.config, {
-    services: ['sauce'],
+    // We have Travis setup and teardown the sauce connect tunnel for us.
     sauceConnect: true
   });
 }
