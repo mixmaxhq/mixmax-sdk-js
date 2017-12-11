@@ -91,7 +91,7 @@ if (isTravis) {
   }, require('./sauce-creds.json'));
 }
 
-function* range(start, end, skip) {
+function* range(start, end, skip=1) {
   for (let i = start; i < end; i += skip) {
     yield i;
   }
