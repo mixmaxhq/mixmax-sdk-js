@@ -5,12 +5,7 @@ exports.config = {
     './specs/**/*.js'
   ],
   maxInstances: 1,
-  capabilities: [{
-    browserName: 'chrome',
-    version: 'latest',
-    platform: 'Windows 7',
-    build: process.env.TRAVIS_BUILD_NUMBER
-  }]/*Array.from(detonate({
+  capabilities: Array.from(detonate({
     $each: [{
       browserName: 'chrome',
       // Support the last twenty chrome versions, skipping every 5.
@@ -60,7 +55,7 @@ exports.config = {
     ]},
     build: process.env.TRAVIS_BUILD_NUMBER,
     name: 'SDK Tests'
-  }))*/,
+  })),
   sync: true,
   logLevel: 'error',
   coloredLogs: true,
