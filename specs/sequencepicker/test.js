@@ -7,6 +7,17 @@ function firstOf(maybeArray, defaultValue=null) {
   return Array.isArray(maybeArray) ? (maybeArray.length ? maybeArray[0] : defaultValue) : maybeArray;
 }
 
+function anyOf(maybeArray, defaultValue=false) {
+  return Array.isArray(maybeArray) ? (maybeArray.length ? maybeArray.some((v) => v) : defaultValue) : maybeArray;
+}
+
+browser.addCommand('waitForReallyVisible', (selector, ms) => {
+  const errorMsg = `element ("${selector}") still not really visible after ${ms}ms`;
+  browser.waitUntil(function reallyVisible() {
+    return anyOf(browser.isVisibleWithinViewport(selector));
+  }, ms, errorMsg);
+});
+
 function isActuallyVisible(selector) {
   if (!browser.isExisting(selector)) return false;
   if (!firstOf(browser.isVisibleWithinViewport(selector), false)) return false;
