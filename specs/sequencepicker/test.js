@@ -41,6 +41,20 @@ describe('sequence picker', function() {
   // Let webdriver handle timeouts.
   this.timeout(0);
 
+  afterEach(function() {
+    // Clear state between tests.
+    try {
+      browser.url('https://app.mixmax.com');
+      browser.deleteCookie();
+      browser.url('about:blank');
+    } catch (err) {
+      // Webdriver doesn't handle errors here correctly, so we at least log the error:
+      // https://github.com/webdriverio/webdriverio/issues/2494
+      console.error('afterEach clear state error', (err && err.stack) || err);
+      throw err;
+    }
+  });
+
   it('should show a login button', function() {
     browser.url('http://localhost:9000/examples/sequencepicker/index.html');
     browser.waitForVisible('.js-mixmax-sequence-picker-button-iframe', 15000);
