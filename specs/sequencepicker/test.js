@@ -25,7 +25,11 @@ function setAuthCookies() {
   browser.url('https://app.mixmax.com');
   for (let cookie of authCookies) {
     // The cookies must specify a domain without a leading dot, as Firefox sees this as a different
-    // domain than the current domain, and rejects it as a security error.
+    // domain than the current domain, and rejects it as a security error. When we give Chrome a
+    // cookie without the leading dot, it doesn't appear to apply the cookies correctly to our
+    // domains.
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
+    // See also: https://github.com/w3c/webdriver/issues/1143
     if (browser.desiredCapabilities.browserName === 'firefox') {
       cookie.domain = cookie.domain.replace(/^\./, '');
     }
@@ -33,7 +37,7 @@ function setAuthCookies() {
   }
 }
 
-describe('homepage', function() {
+describe('sequence picker', function() {
   // Let webdriver handle timeouts.
   this.timeout(0);
 
