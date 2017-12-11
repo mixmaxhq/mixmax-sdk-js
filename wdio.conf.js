@@ -8,27 +8,28 @@ exports.config = {
   ],
   maxInstances: 1,
   capabilities: Array.from(detonate({
+    name: 'SDK Tests',
+    build: process.env.TRAVIS_BUILD_NUMBER,
     $each: [{
-      browserName: 'chrome',
-      // Support the last fifteen chrome versions, skipping every 5.
-      version: {$each: latestVersions(0, 20, 5)}
-    }, {
-      browserName: 'firefox',
-      // Support the last fifteen firefox version, skipping every 5, and explictly support FF 45.
-      version: {$each: ['45', ...latestVersions(0, 20, 5)]}
+      platform: {$each: [
+        'OS X 10.9',
+        'macOS 10.12',
+        'Windows 10',
+        'Windows 8.1'
+      ]},
+      $each: [{
+        browserName: 'chrome',
+        // Support the last two chrome versions.
+        version: {$each: latestVersions(0, 2)}
+      }, {
+        browserName: 'firefox',
+        // Support the last two firefox versions, and explictly support FF 45.
+        version: {$each: ['45', ...latestVersions(0, 2)]}
+      }]
     }, {
       browserName: 'safari',
-      // Custom supported version/platform combinations.
+      // Support the last two safari versions.
       $each: [{
-        version: '7.0',
-        platform: 'OS X 10.9'
-      }, {
-        version: '8.0',
-        platform: 'OS X 10.10'
-      }, {
-        version: '9.0',
-        platform: 'OS X 10.11'
-      }, {
         version: '10.0',
         platform: 'OS X 10.11'
       }, {
@@ -38,7 +39,7 @@ exports.config = {
     }, {
       browserName: 'internet explorer',
       platform: 'Windows 7',
-      version: {$each: ['8.0', '9.0', '10.0']}
+      version: '10.0'
     }, {
       platform: 'Windows 10',
       $each: [{
@@ -48,15 +49,7 @@ exports.config = {
         browserName: 'MicrosoftEdge',
         version: {$each: ['13.14393', '15.15063']}
       }]
-    }],
-    platform: {$each: [
-      'OS X 10.9',
-      'macOS 10.12',
-      'Windows 10',
-      'Windows 8.1'
-    ]},
-    build: process.env.TRAVIS_BUILD_NUMBER,
-    name: 'SDK Tests'
+    }]
   })),
   sync: true,
   logLevel: 'error',
