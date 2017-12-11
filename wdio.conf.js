@@ -66,7 +66,6 @@ exports.config = {
   coloredLogs: true,
   deprecationWarnings: true,
   bail: 0,
-  screenshotPath: './errorShots/',
   baseUrl: 'http://localhost:9000',
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
@@ -94,7 +93,9 @@ if (isTravis) {
 } else {
   Object.assign(exports.config, {
     // We have Travis setup and teardown the sauce connect tunnel for us.
-    sauceConnect: true
+    sauceConnect: true,
+    // Save screenshots when an error occurs.
+    screenshotPath: './errorShots/'
   });
 }
 
