@@ -76,7 +76,7 @@ function formatTargets(targets) {
     .flatten()
     .map((target) => {
       // Generate minified versions in production.
-      if (ENVIRONMENT === 'production') {
+      if (ENVIRONMENT === 'production' || ENVIRONMENT === 'test') {
         return [target, `${target}.min`];
       } else {
         return target;
@@ -94,7 +94,7 @@ const build = new MultiBuild({
     'widgets'
   ]),
   errorHandler(e) {
-    if (ENVIRONMENT !== 'production') {
+    if (ENVIRONMENT !== 'production' && ENVIRONMENT !== 'test') {
       // Keep watching for changes on failure.
       // eslint-disable-next-line no-console
       console.error(e);
@@ -135,7 +135,7 @@ const build = new MultiBuild({
              *
              * Disable module transformation per https://github.com/rollup/rollup-plugin-babel#modules.
              */
-            (ENVIRONMENT === 'development') ?  null : [ 'es2015', { modules: false } ],
+            (ENVIRONMENT === 'development') ? null : [ 'es2015', { modules: false } ],
           ]),
           plugins: [
             'external-helpers'
@@ -154,7 +154,7 @@ const build = new MultiBuild({
       moduleName: name === 'Mixmax' ? 'Mixmax' : `Mixmax.${name}`,
       // Only generate source maps when building for production in order to lower build times.
       // Note that we generate sourcemaps even for the non-minified targets since we transpile.
-      sourceMap: (ENVIRONMENT === 'production')
+      sourceMap: ENVIRONMENT === 'production' || ENVIRONMENT === 'test'
     };
   },
   output: (target, input) => {
