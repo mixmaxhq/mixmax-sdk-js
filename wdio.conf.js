@@ -1,3 +1,5 @@
+/* global browser */
+
 const detonate = require('detonate-object');
 
 exports.config = {
@@ -72,6 +74,8 @@ exports.config = {
     ui: 'bdd'
   },
   // Clear state between tests.
+  // We do this here instead of in the test suites because webdriver doesn't seem to handle hook
+  // failures correctly: https://github.com/webdriverio/webdriverio/issues/2494
   afterTest() {
     browser.url('https://app.mixmax.com');
     browser.deleteCookie();
