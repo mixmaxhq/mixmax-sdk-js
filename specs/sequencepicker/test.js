@@ -1,3 +1,4 @@
+/* eslint no-console: off */
 const expect = require('chai').expect;
 
 const authCookies = JSON.parse(Buffer.from(process.env.AUTH_COOKIES, 'base64').toString());
