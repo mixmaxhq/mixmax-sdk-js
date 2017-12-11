@@ -5,21 +5,15 @@ exports.config = {
     './specs/**/*.js'
   ],
   maxInstances: 1,
-  capabilities: [{
-    browserName: 'safari',
-    version: '7.0',
-    platform: 'OS X 10.9',
-    build: process.env.TRAVIS_BUILD_NUMBER,
-    name: 'test failing safari'
-  }]/*Array.from(detonate({
+  capabilities: Array.from(detonate({
     $each: [{
       browserName: 'chrome',
-      // Support the last twenty chrome versions, skipping every 5.
+      // Support the last fifteen chrome versions, skipping every 5.
       version: {$each: latestVersions(0, 20, 5)}
     }, {
       browserName: 'firefox',
-      // Support the last twenty firefox version, skipping every 5.
-      version: {$each: latestVersions(0, 20, 5)}
+      // Support the last fifteen firefox version, skipping every 5, and explictly support FF 45.
+      version: {$each: ['45', ...latestVersions(0, 20, 5)]}
     }, {
       browserName: 'safari',
       // Custom supported version/platform combinations.
@@ -61,7 +55,7 @@ exports.config = {
     ]},
     build: process.env.TRAVIS_BUILD_NUMBER,
     name: 'SDK Tests'
-  }))*/,
+  })),
   sync: true,
   logLevel: 'error',
   coloredLogs: true,
