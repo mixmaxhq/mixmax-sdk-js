@@ -41,16 +41,6 @@ describe('sequence picker', function() {
   // Let webdriver handle timeouts.
   this.timeout(0);
 
-  /*beforeEach(function() {
-    // Clear all cookies before each test.
-    browser.deleteCookie();
-  });
-
-  afterEach(function() {
-    // Navigate to a blank page to clear any page state.
-    browser.url('about:blank');
-  });*/
-
   it('should show a login button', function() {
     browser.url('http://localhost:9000/examples/sequencepicker/index.html');
     browser.waitForVisible('.js-mixmax-sequence-picker-button-iframe', 15000);

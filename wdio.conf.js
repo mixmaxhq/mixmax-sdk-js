@@ -76,6 +76,12 @@ exports.config = {
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd'
+  },
+  // Clear state between tests.
+  afterTest() {
+    browser.url('https://app.mixmax.com');
+    browser.deleteCookie();
+    browser.url('about:blank');
   }
 };
 
