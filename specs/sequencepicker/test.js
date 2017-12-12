@@ -74,13 +74,9 @@ describe('sequence picker', function() {
 
   it('should show a login button', function() {
     browser.url('http://localhost:9000/examples/sequencepicker/index.html');
-    browser.waitForVisible('.js-mixmax-sequence-picker-button-iframe', 15000);
-    expect(isActuallyVisible('.js-mixmax-sequence-picker-button-iframe')).to.be.ok;
-    const buttonFrame = browser.element('.js-mixmax-sequence-picker-button-iframe').value;
-    browser.frame(buttonFrame);
-    browser.click('.js-btn-add-to-sequence');
-    browser.frame();
-    browser.waitForVisible('.js-mixmax-sequence-picker-iframe', 5000);
+    browser.waitForReallyVisible('.js-mixmax-sequence-picker-button-iframe', 15000);
+    browser.click('.js-mixmax-sequence-picker-button-iframe');
+    browser.waitForReallyVisible('.js-mixmax-sequence-picker-iframe', 5000);
     expect(isActuallyVisible('.js-mixmax-sequence-picker-iframe')).to.be.ok;
     browser.enterFrame('.js-mixmax-sequence-picker-iframe');
     browser.waitForReallyVisible('.js-login', 5000);
@@ -92,12 +88,9 @@ describe('sequence picker', function() {
   it('should show a sequence item', function() {
     setAuthCookies();
     browser.url('http://localhost:9000/examples/sequencepicker/index.html');
-    browser.waitForVisible('.js-mixmax-sequence-picker-button-iframe', 15000);
-    const buttonFrame = browser.element('.js-mixmax-sequence-picker-button-iframe').value;
-    browser.frame(buttonFrame);
-    browser.click('.js-btn-add-to-sequence');
-    browser.frame();
-    browser.waitForVisible('.js-mixmax-sequence-picker-iframe', 5000);
+    browser.waitForReallyVisible('.js-mixmax-sequence-picker-button-iframe', 15000);
+    browser.click('.js-mixmax-sequence-picker-button-iframe');
+    browser.waitForReallyVisible('.js-mixmax-sequence-picker-iframe', 5000);
     expect(isActuallyVisible('.js-mixmax-sequence-picker-iframe')).to.be.ok;
     browser.enterFrame('.js-mixmax-sequence-picker-iframe');
     browser.waitForReallyVisible('.js-sequence-item', 5000);
