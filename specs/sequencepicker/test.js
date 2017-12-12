@@ -1,5 +1,6 @@
 /* eslint no-console: off */
 const expect = require('chai').expect;
+const hasOwn = Object.prototype.hasOwnProperty;
 
 const authCookies = JSON.parse(Buffer.from(process.env.AUTH_COOKIES, 'base64').toString());
 
@@ -14,7 +15,13 @@ function anyOf(maybeArray, defaultValue=false) {
 browser.addCommand('waitForReallyVisible', (selector, ms) => {
   const errorMsg = `element ("${selector}") still not really visible after ${ms}ms`;
   browser.waitUntil(function reallyVisible() {
-    return anyOf(browser.isVisibleWithinViewport(selector));
+    const res = browser.isVisibleWithinViewport(selector);
+    if (hasOwn.call(res, 'column') && hasOwn.call(res, 'line')) {
+      // An error occurred, but webdriver didn't report it. Assume it was because we didn't find the
+      // element.
+      return false;
+    }
+    return anyOf(res);
   }, ms, errorMsg);
 });
 
