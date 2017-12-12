@@ -17,15 +17,9 @@ exports.config = {
         'Windows 10',
         'Windows 8.1'
       ]},
-      $each: [{
-        browserName: 'chrome',
-        // Support the last two chrome versions.
-        version: {$each: latestVersions(0, 2)}
-      }, {
-        browserName: 'firefox',
-        // Support the last two firefox versions, and explictly support FF 45.
-        version: {$each: ['45', ...latestVersions(0, 2)]}
-      }]
+      // Support two latest versions of chrome and firefox.
+      browserName: {$each: ['chrome', 'firefox']},
+      version: {$each: latestVersions(0, 2)}
     }, {
       browserName: 'safari',
       // Support the last two safari versions.
@@ -44,11 +38,16 @@ exports.config = {
       platform: 'Windows 10',
       $each: [{
         browserName: 'internet explorer',
-        version: '11.103'
+        version: '11'
       }, {
         browserName: 'MicrosoftEdge',
-        version: {$each: ['13.14393', '15.15063']}
+        version: {$each: ['13', '15']}
       }]
+    }, {
+      // Explicitly support FF 45 for external integration testing.
+      platform: 'linux',
+      browserName: 'firefox',
+      version: '45'
     }]
   })),
   sync: true,
