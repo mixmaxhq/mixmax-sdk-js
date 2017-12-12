@@ -18,6 +18,11 @@ browser.addCommand('waitForReallyVisible', (selector, ms) => {
   }, ms, errorMsg);
 });
 
+browser.addCommand('enterFrame', (selector) => {
+  const frame = $(selector).value;
+  browser.frame(frame);
+});
+
 function isActuallyVisible(selector) {
   if (!browser.isExisting(selector)) return false;
   if (!firstOf(browser.isVisibleWithinViewport(selector), false)) return false;
