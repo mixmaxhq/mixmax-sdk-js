@@ -63,6 +63,7 @@
     "underscore": "^1.8.3",
     "wdio-mocha-framework": "^0.5.11",
     "wdio-sauce-service": "^0.4.4",
+    "wdio-selenium-standalone-service": "^0.0.9",
     "webdriverio": "^4.9.11",
     "yargs": "^3.25.0"
   },
