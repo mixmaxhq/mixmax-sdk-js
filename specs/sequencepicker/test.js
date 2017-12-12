@@ -59,17 +59,28 @@ function setAuthCookies() {
   // sense because we specify the domain along with the cookie data. It's inconsistent, though, so
   // we always go to app.mixmax.com for reliability.
   browser.url('https://app.mixmax.com');
-  for (let cookie of authCookies) {
-    // The cookies must specify a domain without a leading dot, as Firefox sees this as a different
-    // domain than the current domain, and rejects it as a security error. When we give Chrome a
-    // cookie without the leading dot, it doesn't appear to apply the cookies correctly to our
-    // domains.
+  for (const cookie of authCookies) {
+    // The cookies must specify a domain without a leading dot, as newer versions of Firefox see
+    // this as a different domain than the current domain, and rejects it as a security error. When
+    // we give other browsers or older versions of Firefox a cookie without the leading dot, they
+    // doesn't appear to apply the cookies correctly to our domains.
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
     // See also: https://github.com/w3c/webdriver/issues/1143
     if (browser.desiredCapabilities.browserName === 'firefox') {
-      cookie.domain = cookie.domain.replace(/^\./, '');
+      try {
+        browser.setCookie(cookie);
+      } catch (err) {
+        // Assume the error is a security error, and retry without the leading dot.
+        if (cookie.domain && cookie.domain.startsWith('.')) {
+          const altCookie = Object.assign({}, cookie, {
+            domain: cookie.domain.replace(/^\./, '')
+          });
+          browser.setCookie(altCookie);
+        }
+      }
+    } else {
+      browser.setCookie(cookie);
     }
-    browser.setCookie(cookie);
   }
 }
 
