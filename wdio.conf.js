@@ -39,9 +39,6 @@ exports.config = {
       $each: [{
         browserName: 'internet explorer',
         version: '11'
-      }, {
-        browserName: 'MicrosoftEdge',
-        version: {$each: ['13', '15']}
       }]
     }, {
       // Explicitly support FF 45 for external integration testing.
