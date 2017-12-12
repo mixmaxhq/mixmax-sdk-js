@@ -70,13 +70,14 @@ function setAuthCookies() {
       try {
         browser.setCookie(cookie);
       } catch (err) {
-        // Assume the error is a security error, and retry without the leading dot.
-        if (cookie.domain && cookie.domain.startsWith('.')) {
-          const altCookie = Object.assign({}, cookie, {
-            domain: cookie.domain.replace(/^\./, '')
-          });
-          browser.setCookie(altCookie);
-        }
+        // Assume the error is a security error, and ignore it.
+      }
+      // Always also attempt to set the cookie without the leading dot, as some versions of firefox
+      // (see above) will ignore the domain with the leading dot and just use the current domain.
+      if (cookie.domain && cookie.domain.startsWith('.')) {
+        browser.setCookie(Object.assign({}, cookie, {
+          domain: cookie.domain.replace(/^\./, '')
+        }));
       }
     } else {
       browser.setCookie(cookie);
