@@ -82,11 +82,11 @@ describe('sequence picker', function() {
     browser.frame();
     browser.waitForVisible('.js-mixmax-sequence-picker-iframe', 5000);
     expect(isActuallyVisible('.js-mixmax-sequence-picker-iframe')).to.be.ok;
-    const pickerFrame = browser.element('.js-mixmax-sequence-picker-iframe').value;
-    browser.frame(pickerFrame);
-    browser.waitForVisible('.js-login', 5000);
+    browser.enterFrame('.js-mixmax-sequence-picker-iframe');
+    browser.waitForReallyVisible('.js-login', 5000);
     // Make sure the login button shows.
     expect(isActuallyVisible('.js-login')).to.be.ok;
+    browser.frame();
   });
 
   it('should show a sequence item', function() {
@@ -99,11 +99,11 @@ describe('sequence picker', function() {
     browser.frame();
     browser.waitForVisible('.js-mixmax-sequence-picker-iframe', 5000);
     expect(isActuallyVisible('.js-mixmax-sequence-picker-iframe')).to.be.ok;
-    const pickerFrame = browser.element('.js-mixmax-sequence-picker-iframe').value;
-    browser.frame(pickerFrame);
-    browser.waitForVisible('.js-sequence-item', 5000);
+    browser.enterFrame('.js-mixmax-sequence-picker-iframe');
+    browser.waitForReallyVisible('.js-sequence-item', 5000);
     expect(isActuallyVisible('.js-sequence-item')).to.be.ok;
     // Make sure there isn't a login button.
     expect(isActuallyVisible('.js-login')).to.not.be.ok;
+    browser.frame();
   });
 });
