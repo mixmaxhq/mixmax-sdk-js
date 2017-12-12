@@ -1,4 +1,5 @@
 /* eslint no-console: off */
+/* global document */
 const expect = require('chai').expect;
 const hasOwn = Object.prototype.hasOwnProperty;
 
@@ -28,6 +29,17 @@ browser.addCommand('waitForReallyVisible', (selector, ms) => {
 browser.addCommand('enterFrame', (selector) => {
   const frame = $(selector).value;
   browser.frame(frame);
+});
+
+// Click with polyfill.
+browser.addCommand('polyClick', (selector) => {
+  if (['chrome', 'firefox'].includes(browser.desiredCapabilities.browserName)) {
+    browser.click(selector);
+  } else {
+    browser.execute(function(selector) {
+      document.querySelector(selector).click();
+    }, selector);
+  }
 });
 
 function isActuallyVisible(selector) {
@@ -82,7 +94,10 @@ describe('sequence picker', function() {
   it('should show a login button', function() {
     browser.url('http://localhost:9000/examples/sequencepicker/index.html');
     browser.waitForReallyVisible('.js-mixmax-sequence-picker-button-iframe', 15000);
-    browser.click('.js-mixmax-sequence-picker-button-iframe');
+    browser.enterFrame('.js-mixmax-sequence-picker-button-iframe');
+    browser.waitForReallyVisible('.js-btn-add-to-sequence', 5000);
+    browser.polyClick('.js-btn-add-to-sequence');
+    browser.frame();
     browser.waitForReallyVisible('.js-mixmax-sequence-picker-iframe', 5000);
     expect(isActuallyVisible('.js-mixmax-sequence-picker-iframe')).to.be.ok;
     browser.enterFrame('.js-mixmax-sequence-picker-iframe');
@@ -96,7 +111,10 @@ describe('sequence picker', function() {
     setAuthCookies();
     browser.url('http://localhost:9000/examples/sequencepicker/index.html');
     browser.waitForReallyVisible('.js-mixmax-sequence-picker-button-iframe', 15000);
-    browser.click('.js-mixmax-sequence-picker-button-iframe');
+    browser.enterFrame('.js-mixmax-sequence-picker-button-iframe');
+    browser.waitForReallyVisible('.js-btn-add-to-sequence', 5000);
+    browser.polyClick('.js-btn-add-to-sequence');
+    browser.frame();
     browser.waitForReallyVisible('.js-mixmax-sequence-picker-iframe', 5000);
     expect(isActuallyVisible('.js-mixmax-sequence-picker-iframe')).to.be.ok;
     browser.enterFrame('.js-mixmax-sequence-picker-iframe');
