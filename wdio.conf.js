@@ -1,6 +1,6 @@
-/* global browser */
-
 const detonate = require('detonate-object');
+
+const runLocally = false;
 
 exports.config = {
   specs: [
@@ -54,14 +54,13 @@ exports.config = {
   sync: true,
   logLevel: 'error',
   coloredLogs: true,
-  deprecationWarnings: true,
+  deprecationWarnings: false,
   bail: 0,
   baseUrl: 'http://localhost:9000',
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
-  services: ['sauce'],
-  // services: ['selenium-standalone'],
+  services: runLocally ? ['selenium-standalone'] : ['sauce'],
   framework: 'mocha',
   mochaOpts: {
     ui: 'bdd'
@@ -84,11 +83,11 @@ if (isTravis) {
 } else {
   Object.assign(exports.config, {
     // We have Travis setup and teardown the sauce connect tunnel for us.
-    sauceConnect: true,
+    sauceConnect: !runLocally,
     // Save screenshots when an error occurs.
     screenshotPath: './errorShots/'
     // Add user and key credentials to sauce-creds.json to avoid them being accidentally committed.
-  }, require('./sauce-creds.json'));
+  }, runLocally ? {} : require('./sauce-creds.json'));
 }
 
 function* range(start, end, skip=1) {
