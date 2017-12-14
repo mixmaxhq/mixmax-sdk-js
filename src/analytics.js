@@ -14,7 +14,7 @@ export function init(initUserId) {
 export function track(action) {
   if (!userId) {
     // eslint-disable-next-line no-console
-    console.warn('Called Mixmax.analytics.track() without having first called Mixmax.analytics.init(). Ignoring event.');
+    console.error('[Mixmax] Called Mixmax.analytics.track() without having first called Mixmax.analytics.init(). Ignoring event.');
     return;
   }
 
