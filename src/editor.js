@@ -1,5 +1,5 @@
 /**
- * The Mixmax App JS SDK. See documentation at http://sdk.mixmax.com
+ * The Mixmax App JS SDK. See documentation at http://developer.mixmax.com
  */
 
 /**

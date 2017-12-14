@@ -11,6 +11,8 @@ It exports a top level module called `Mixmax`, with submodules
 sequence picker as documented [here][sequence picker docs].
 * `Mixmax.sidebar`: APIs for integrating your website into the Mixmax sidebar as documented
 [here][Mixmax.sidebar docs].
+* `Mixmax.analytics`: APIs for tracking recipients of your Mixmax emails on your website
+[here][Mixmax.analytics docs].
 
 If you are interested in contributing to this repo, see [here][CONTRIBUTING.md].
 
@@ -18,4 +20,5 @@ If you are interested in contributing to this repo, see [here][CONTRIBUTING.md].
 [Mixmax.editor docs]: https://developer.mixmax.com/docs/overview-enhancement#sdkjs
 [sequence picker docs]: https://developer.mixmax.com/docs/sequences-picker
 [Mixmax.sidebar docs]: https://developer.mixmax.com/docs/sidebars
+[Mixmax.analytics docs]: https://developer.mixmax.com/docs/analytics
 [CONTRIBUTING.md]: CONTRIBUTING.md
