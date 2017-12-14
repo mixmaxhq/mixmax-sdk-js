@@ -22,7 +22,7 @@ export function track(action) {
   }
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', `${Environment.analyticsUrl}/analytics/${userId}/event?version=${encodeURIComponent(Environment.version)}`, true /* async */);
+  xhr.open('POST', `${Environment.analyticsUrl}/analytics/${encodeURIComponent(userId)}/event?version=${encodeURIComponent(Environment.version)}`, true /* async */);
 
   // We need to use regular form encoding to prevent the CORS preflight which would
   // just add 2x the HTTP requests.
