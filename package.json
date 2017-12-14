@@ -1,6 +1,6 @@
 {
   "name": "@mixmaxhq/sdk",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Our client-side SDK.",
   "main": "dist/Mixmax.umd.js",
   "module": "dist/Mixmax.es.js",
