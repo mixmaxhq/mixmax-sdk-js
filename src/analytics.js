@@ -1,3 +1,6 @@
+import Environment from '/utils/Environment';
+
+
 /**
  * The Mixmax Analytics JS SDK. See documentation at http://developer.mixmax.com
  */
@@ -19,7 +22,7 @@ export function track(action) {
   }
 
   var xhr = new XMLHttpRequest();
-  xhr.open('POST', `https://links-local.mixmax.com/analytics/${userId}/event`, true /* async */);
+  xhr.open('POST', `${Environment.analyticsUrl}/analytics/${userId}/event`, true /* async */);
 
   // We need to use regular form encoding to prevent the CORS preflight which would
   // just add 2x the HTTP requests.
