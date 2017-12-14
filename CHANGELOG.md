@@ -1,5 +1,7 @@
 ## Release History
 
+* 1.4.0 Added Mixmax.analytics namespace
+
 * 1.3.0 Add an SDK for building sidebar integrations
 
 * 1.2.0 Move the sequence picker button into an iframe
