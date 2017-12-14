@@ -22,7 +22,7 @@
     "type": "git",
     "url": "https://github.com/mixmaxhq/mixmax-sdk-js.git"
   },
-  "author": "Brad Vogel <brad@mixmax.com> (https://mixmax.com/)",
+  "author": "Mixmax <hello@mixmax.com> (https://mixmax.com/)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mixmaxhq/mixmax-sdk-js/issues"
