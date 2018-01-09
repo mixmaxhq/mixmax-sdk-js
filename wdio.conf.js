@@ -1,5 +1,9 @@
 const detonate = require('detonate-object');
 
+// WARNING: When testing in Firefox locally, some part of the Selenium setup won't recognize
+// 'macOS 10.12' as an acceptable `platform` value (though it'll work with Chrome); you'll get an
+// error "Unable to find a matching set of capabilities". To work around this, specify 'macOS'
+// (only when running locally).
 const runLocally = false;
 
 exports.config = {
