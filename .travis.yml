@@ -12,4 +12,35 @@ node_js: 6.9.1
 
 cache: yarn
 
+# Don’t build pushes except on tagged commits. (This doesn’t affect PR builds, which are separate
+# from branch builds in Travis, and Travis considers tags as special branches
+# https://mail.mixmax.com/m/YjyyIyJGsiYHcCbVI. If we didn’t have this config, Travis would run both
+# types of builds for PRs, consuming our concurrent builds.)
+#
+# Note that it is not possible, unfortunately, to only build tags when they hit master:
+# https://mail.mixmax.com/m/M5yCPDkGsE3RDkbex We'll just have to only tag on master vs. branches.
+branches:
+  only:
+    - /^v[0-9]+\.[0-9]+\.[0-9]+$/
+
 script: 'yarn ci'
+
+deploy:
+  - provider: script
+    # Prevent Travis from resetting the build artifacts.
+    skip_cleanup: true
+    script: yarn upload -- --use-prebuilt
+    on:
+      tags: true
+  - provider: npm
+    email: admin+mixmax-codeship-npm@mixmax.com
+    api_key:
+      secure: FCj0WT09y+mD5Jc7nadlKEikkUxMw+tFjyAiuJ7FAzrdmg9ijg+k7UyW6f4CTrxESdU+Ta21zFtHAqUyCZs3m5rgHsyA1ln5+qjb92SORn32CPTBbXyaEeWltUWhxCqUdAubZpCxr69XFSXGCoBJyDdKTk/Kxu/FNFTx5348Ld1ln5HMkQaJVaDpjdZgT9mNejoFazXJkdDMbFp3qt5I8c9PSel7RofeMKmkP7tZlytDic7bgO+mMyvpGRdRajFUzSTB+esGZk9uYkigT6AvJoWMBRbJqDEq9PsEsPZPkukipaWJjNtKJRc9Dj+1DhT5yCRLYo/lmAPP4lsPZpIWpSaDqijqBlIUcnnsAUIT9tgZpW/7OPwrWGXWYfixiBT2K3t0A2w6rUxZiQAtqy9Qw04Ih7TGmQBYhSFXO342y1gnURYHuX1pq7b+kbp2xUj7RHKo0KgMx/1DBXpJZWO7Wy6e0A1TTRMXidddNEMhYwyJVc/IjtGg46DTQLJVmrqsHTTxMDokKp94d83Vjz3r3eIuqRpqVevrnDu5MSY44osYqRZK62kvs5fBGmi/qOa2ph1coRxsUAgF4tT88d0jryUSRSODg5udc0BX3Q3lsch9GnH0c4rqVCmzvHbdxNo11UmmgmNpV+AGyCyEgY1XhYkgaslSgqbpkDBUwwBbpsM=
+    # Prevent Travis from resetting the build artifacts.
+    skip_cleanup: true
+    on:
+      tags: true
+
+notifications:
+  slack:
+    secure: v5yzEtFLSp1oLGhCuUv9Sab4ltcZeQuGcTfoOIgVnOMn8dPTvEAzPTbbmoZcpOA0ZYhGN4FIB0ov6aq/VDrp4pRxghseNII5HYrIpR06nQiY9qtWJYvtlwWbPymwpcJev3FJqj45ceceSXTGnKqWiNRS4y/38xVL9DnkwM8rlImO0Y7NJGBO0L18vAIJ5rUXu3q30bpaFgbie5zG//8f4d8AhTBe5gjxlNoN5MUCS9fd7wvnwYmYY0dugxHANQTbp5SowOpb0Nz+HOm35w9w/kMKMrtoNGWDk+lid5Aq/3FF4jE8yMNhElVwbPy4JpW1EIQ6sqDNfFKhzCcBojDbSOvRyHk3AcNVTKTa/YcI50qSu72GbIc8AjfwyqMtA8ApWzGRD9/j6L9Rhas1FI9Ej0hl1uQw5JJ1DuOBqIlSaeiNp72svOgb2yFOmGE2q3TZe0l/598NyI4Oh91+XQvNZ9xb5IKdXg36HogHzXKPsy3RerQGft2+yZJvXW5W6xIJUf4ppCv4Q0au80vQTrikVZRXaat6yo5ffrKNhmzwYECInrc7rJGqA+N2lU50xp5y3a8IeRZS99X1rEBaSc5ZZUunStYpCdqotXLCTdV4A3nDEihHBofwIxajZh6CgiXCvahlvKA5IeZZ5qowUbGZ9bBCSgWoz7YzS27Q36QH8HI=

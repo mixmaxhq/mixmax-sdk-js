@@ -16,7 +16,7 @@
     "test": "NODE_ENV=test gulp test:e2e",
     "build": "gulp build",
     "upload": "env NODE_ENV=production gulp upload",
-    "ci": "yarn build && yarn test"
+    "ci": "yarn test"
   },
   "repository": {
     "type": "git",
