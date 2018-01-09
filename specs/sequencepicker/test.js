@@ -3,6 +3,10 @@
 const expect = require('chai').expect;
 const hasOwn = Object.prototype.hasOwnProperty;
 
+// On Travis, these tests will run using a login token for engtestuser8@mixmax.com. You can get a
+// JSON-formatted version of this cookie from a previous Sauce Labs session --look for a "POST
+// cookie" command. Then put it in an array and base64-encode it at the CLI e.g. using
+// `Buffer#toString('base64')`.
 const authCookies = JSON.parse(Buffer.from(process.env.AUTH_COOKIES, 'base64').toString());
 
 function firstOf(maybeArray, defaultValue=null) {
