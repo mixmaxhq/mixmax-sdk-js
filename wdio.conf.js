@@ -21,9 +21,16 @@ exports.config = {
         'Windows 10',
         'Windows 8.1'
       ]},
-      // Support two latest versions of chrome and firefox.
-      browserName: {$each: ['chrome', 'firefox']},
-      version: {$each: latestVersions(0, 2)}
+      // Support two latest versions of Chrome and the latest version of Firefox.
+      // TODO(jeff): Re-enable the *two* latest versions of Firefox when Firefox ships 58;
+      // setting cookies works in 55, is broken in 56, and works in 57 (the latest as of this writing).
+      $each: [{
+        browserName: 'chrome',
+        version: {$each: latestVersions(0, 2)}
+      }, {
+        browserName: 'firefox',
+        version: {$each: latestVersions(0, 1)}
+      }]
     }, {
       browserName: 'safari',
       // Support the last two safari versions.
