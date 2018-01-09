@@ -71,11 +71,20 @@ function setAuthCookies() {
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1415828
     // See also: https://github.com/w3c/webdriver/issues/1143
     if (browser.desiredCapabilities.browserName === 'firefox') {
+      // Since we want to ignore the security error here, we also temporarily disable WDIO's
+      // automatic error screenshots.
+      const { screenshotPath } = browser.options;
+      delete browser.options.screenshotPath;
+
       try {
         browser.setCookie(cookie);
       } catch (err) {
         // Assume the error is a security error, and ignore it.
+      } finally {
+        // Resume taking screenshots.
+        browser.options.screenshotPath = screenshotPath;
       }
+
       // Always also attempt to set the cookie without the leading dot, as some versions of firefox
       // (see above) will ignore the domain with the leading dot and just use the current domain.
       if (cookie.domain && cookie.domain.startsWith('.')) {
