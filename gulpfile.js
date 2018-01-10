@@ -75,11 +75,11 @@ function formatTargets(targets) {
     })
     .flatten()
     .map((target) => {
-      // Generate minified versions in production.
-      if (ENVIRONMENT === 'production' || ENVIRONMENT === 'test') {
-        return [target, `${target}.min`];
-      } else {
+      if (ENVIRONMENT === 'development') {
         return target;
+      } else {
+        // Generate minified versions in production and test.
+        return [target, `${target}.min`];
       }
     })
     .flatten()
@@ -94,7 +94,7 @@ const build = new MultiBuild({
     'widgets'
   ]),
   errorHandler(e) {
-    if (ENVIRONMENT !== 'production' && ENVIRONMENT !== 'test') {
+    if (ENVIRONMENT === 'development') {
       // Keep watching for changes on failure.
       // eslint-disable-next-line no-console
       console.error(e);
@@ -152,9 +152,9 @@ const build = new MultiBuild({
       // No worries about users loading multiple submodules individually, Rollup will merge e.g.
       // `Mixmax.editor` and `Mixmax.widgets` into a single `Mixmax` module, because Rollup is awesome.
       moduleName: name === 'Mixmax' ? 'Mixmax' : `Mixmax.${name}`,
-      // Only generate source maps when building for production in order to lower build times.
+      // Only generate source maps when building for production (and test) in order to lower build times.
       // Note that we generate sourcemaps even for the non-minified targets since we transpile.
-      sourceMap: ENVIRONMENT === 'production' || ENVIRONMENT === 'test'
+      sourceMap: ENVIRONMENT !== 'development'
     };
   },
   output: (target, input) => {
