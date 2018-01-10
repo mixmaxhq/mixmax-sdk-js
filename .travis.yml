@@ -12,17 +12,6 @@ node_js: 6.9.1
 
 cache: yarn
 
-# Don’t build pushes except on tagged commits. (This doesn’t affect PR builds, which are separate
-# from branch builds in Travis, and Travis considers tags as special branches
-# https://mail.mixmax.com/m/YjyyIyJGsiYHcCbVI. If we didn’t have this config, Travis would run both
-# types of builds for PRs, consuming our concurrent builds.)
-#
-# Note that it is not possible, unfortunately, to only build tags when they hit master:
-# https://mail.mixmax.com/m/M5yCPDkGsE3RDkbex We'll just have to only tag on master vs. branches.
-branches:
-  only:
-    - /^v[0-9]+\.[0-9]+\.[0-9]+$/
-
 script: 'yarn ci'
 
 deploy:
