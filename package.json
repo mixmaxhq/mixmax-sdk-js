@@ -63,7 +63,7 @@
     "wdio-mocha-framework": "^0.5.11",
     "wdio-sauce-service": "^0.4.4",
     "wdio-selenium-standalone-service": "^0.0.9",
-    "webdriverio": "^4.9.11",
+    "webdriverio": "^4.10.0",
     "yargs": "^3.25.0"
   },
   "publishConfig": {

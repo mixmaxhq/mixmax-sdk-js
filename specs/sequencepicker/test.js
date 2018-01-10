@@ -104,16 +104,9 @@ describe('sequence picker', function() {
 
   afterEach(function() {
     // Clear state between tests.
-    try {
-      browser.url('https://app.mixmax.com');
-      browser.deleteCookie();
-      browser.url('about:blank');
-    } catch (err) {
-      // Webdriver doesn't handle errors here correctly, so we at least log the error:
-      // https://github.com/webdriverio/webdriverio/issues/2494
-      console.error('afterEach clear state error', (err && err.stack) || err);
-      throw err;
-    }
+    browser.url('https://app.mixmax.com');
+    browser.deleteCookie();
+    browser.url('about:blank');
   });
 
   it('should show a login button', function() {
