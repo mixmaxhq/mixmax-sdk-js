@@ -1,6 +1,6 @@
 # Mixmax JS SDK
 
-[![Build Status](https://travis-ci.com/mixmaxhq/mixmax-sdk-js.svg?token=TcwK43uDe2DuFv6zy5Kb&branch=master)](https://travis-ci.com/mixmaxhq/mixmax-sdk-js)
+[![Build Status](https://travis-ci.org/mixmaxhq/mixmax-sdk-js.svg?branch=master)](https://travis-ci.org/mixmaxhq/mixmax-sdk-js)
 
 This repo is for our Mixmax JavaScript SDK for use by third party apps as well as Mixmax's own apps.
 It exports a top level module called `Mixmax`, with submodules
