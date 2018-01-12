@@ -17,6 +17,9 @@ const rootImport = require('rollup-plugin-root-import');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify-es').default;
+const webdriver = require('gulp-webdriver');
+const waitFor = require('gulp-waitfor');
+const request = require('request');
 
 
 const ENVIRONMENT = process.env.NODE_ENV || 'development';
@@ -72,11 +75,11 @@ function formatTargets(targets) {
     })
     .flatten()
     .map((target) => {
-      // Generate minified versions in production.
-      if (ENVIRONMENT === 'production') {
-        return [target, `${target}.min`];
-      } else {
+      if (ENVIRONMENT === 'development') {
         return target;
+      } else {
+        // Generate minified versions in production and test.
+        return [target, `${target}.min`];
       }
     })
     .flatten()
@@ -93,7 +96,7 @@ const build = new MultiBuild({
     'sidebar'
   ]),
   errorHandler(e) {
-    if (ENVIRONMENT !== 'production') {
+    if (ENVIRONMENT === 'development') {
       // Keep watching for changes on failure.
       // eslint-disable-next-line no-console
       console.error(e);
@@ -134,7 +137,7 @@ const build = new MultiBuild({
              *
              * Disable module transformation per https://github.com/rollup/rollup-plugin-babel#modules.
              */
-            (ENVIRONMENT === 'development') ?  null : [ 'es2015', { modules: false } ],
+            (ENVIRONMENT === 'development') ? null : [ 'es2015', { modules: false } ],
           ]),
           plugins: [
             'external-helpers'
@@ -151,9 +154,9 @@ const build = new MultiBuild({
       // No worries about users loading multiple submodules individually, Rollup will merge e.g.
       // `Mixmax.editor` and `Mixmax.widgets` into a single `Mixmax` module, because Rollup is awesome.
       moduleName: name === 'Mixmax' ? 'Mixmax' : `Mixmax.${name}`,
-      // Only generate source maps when building for production in order to lower build times.
+      // Only generate source maps when building for production (and test) in order to lower build times.
       // Note that we generate sourcemaps even for the non-minified targets since we transpile.
-      sourceMap: (ENVIRONMENT === 'production')
+      sourceMap: ENVIRONMENT !== 'development'
     };
   },
   output: (target, input) => {
@@ -184,12 +187,7 @@ gulp.task('build-assets', function() {
 });
 
 gulp.task('build', function(done) {
-  if (!argv['use-prebuilt']) {
-    runSequence('clean', ['build-js', 'build-assets'], done);
-  } else {
-    // If we've built already, we don't need to do anything.
-    process.nextTick(done);
-  }
+  runSequence('clean', ['build-js', 'build-assets'], done);
 });
 
 
@@ -200,12 +198,46 @@ gulp.task('watch', function() {
 
 
 // Runs a local webserver.
+let ws;
 gulp.task('webserver', function() {
-  gulp.src('.')
+  // Expose the webserver so we can kill it later (see below).
+  ws = gulp.src('.')
     .pipe(webserver({
       directoryListing: true,
       port: 9000
     }));
+});
+
+
+gulp.task('webdriver', function() {
+  return gulp
+    .src('wdio.conf.js')
+    // Repeatedly attempt to connect to the gulp-webserver. Gives up after a minute, by default.
+    // This ensures that our sauce labs tests can reach the webserver.
+    .pipe(waitFor((cb) => {
+      request({
+        url: 'http://localhost:9000',
+        method: 'HEAD',
+        timeout: 5 * 1000
+      }, (err, res) => {
+        cb(!err && res.statusCode === 200);
+      });
+    }))
+    .pipe(webdriver())
+    .on('end', function() {
+      // If the stream ends, kill the webserver. We do this in particular for test:e2e, where the
+      // webdriver will fail if the tests fail. When this happens, we want to have gulp exit,
+      // because the testing is over.
+      ws.emit('kill');
+    });
+});
+
+
+gulp.task('test:e2e', function(cb) {
+  runSequence(
+    'build',
+    ['webserver', 'webdriver'],
+    cb);
 });
 
 

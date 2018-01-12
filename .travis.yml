@@ -4,29 +4,34 @@ dist: trusty
 # Containers for faster startup, also we don't need sudo.
 sudo: false
 
+addons:
+  sauce_connect: true
+
 language: node_js
 node_js: 6.9.1
 
 cache: yarn
 
-# Don’t build pushes except on tagged commits. (This doesn’t affect PR builds, which are separate
-# from branch builds in Travis, and Travis considers tags as special branches
-# https://mail.mixmax.com/m/YjyyIyJGsiYHcCbVI. If we didn’t have this config, Travis would run both
-# types of builds for PRs, consuming our concurrent builds.)
+# Don’t build pushes except on tagged commits, for releases, and master, as it seems is required to
+# enable PR builds from https://mail.mixmax.com/m/RLhrkAAxQCA6YAOv1 and from
+# https://travis-ci.org/mixmaxhq/mixmax-sdk-js/requests. If we allowed arbitrary branches,
+# Travis would run both PR builds _and_ branch builds for PRs, making integration tests twice as
+# slow since we only pay for one concurrent build in Sauce.
 #
 # Note that it is not possible, unfortunately, to only build tags when they hit master:
 # https://mail.mixmax.com/m/M5yCPDkGsE3RDkbex We'll just have to only tag on master vs. branches.
 branches:
   only:
+    - master
     - /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
-script: 'yarn build'
+script: 'yarn ci'
 
 deploy:
   - provider: script
     # Prevent Travis from resetting the build artifacts.
     skip_cleanup: true
-    script: yarn upload -- --use-prebuilt
+    script: yarn upload
     on:
       tags: true
   - provider: npm

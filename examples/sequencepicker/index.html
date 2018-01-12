@@ -41,14 +41,14 @@
     window.getRecipients = function(done) {
       // Simulate some latency as if we were making a network call for the recipients,
       // so that the sequence recipients table will show a loading UI.
-      setTimeout(() => {
+      setTimeout(function() {
         var table = document.querySelector('table');
         var header = table.rows[0];
         var recipients = [].slice.call(table.rows, 1)
-          .map((row) => {
+          .map(function(row) {
             return {
               email: row.cells[1].innerText,
-              variables: [].reduce.call(row.cells, (vars, cell, i) => {
+              variables: [].reduce.call(row.cells, function(vars, cell, i) {
                 vars[header.cells[i].innerText] = cell.innerText;
                 return vars;
               }, {}),
