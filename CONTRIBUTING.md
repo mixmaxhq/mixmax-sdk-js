@@ -41,6 +41,15 @@ Make sure to update `capabilities` below that to only contain browser and operat
 versions that match what you have installed on your machine, and also note the warning about
 specifying `'macOS'`.
 
+### Compatibility targets
+
+Our goal is to be compatible with the last two major versions of Chrome, Safari, Firefox,
+IE, and Edge across a sampling of operating systems. We may also explicitly support specific
+other configurations upon customer request. The full list of targets is listed under
+`capabilities` in [the test configuration](https://github.com/mixmaxhq/mixmax-sdk-js/blob/master/wdio.conf.js).
+
+Note that certain targets may be disabled pending browser support; see [here](https://github.com/mixmaxhq/mixmax-sdk-js/projects/1).
+
 ## Deployment (for Mixmax engineers)
 
 Run [`npm-publish`](https://github.com/mixmaxhq/mixmax-runner/blob/master/scripts/npm-publish)
