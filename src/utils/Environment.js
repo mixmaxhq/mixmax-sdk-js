@@ -1,7 +1,10 @@
 class Environment {
   get() {
-    if (window.location.hostname === 'localhost') return Environment.LOCAL;
-    else return Environment.PRODUCTION;
+    if (window.location.hostname === 'localhost' || /\-local\.mixmax\.com\./.test(window.location.hostname)) {
+      return Environment.LOCAL;
+    } else {
+      return Environment.PRODUCTION;
+    }
   }
 
   is(env) {
@@ -23,13 +26,19 @@ class Environment {
   }
 
   get analyticsUrl() {
-    return 'https://analytics.mixmaxusercontent.com';
+    if (this.is(Environment.PRODUCTION)) {
+      return 'https://analytics.mixmaxusercontent.com';
+    } else {
+      return 'https://files-local.mixmax.com';
+    }
   }
 
   get composeUrl() {
-    // Not sure how to toggle a local vs. production environment.
-    // Will leave it to the developer to temporarily edit the source for now.
-    return 'https://compose.mixmax.com';
+    if (this.is(Environment.PRODUCTION)) {
+      return 'https://compose.mixmax.com';
+    } else {
+      return 'https://compose-local.mixmax.com';
+    }
   }
 }
 
