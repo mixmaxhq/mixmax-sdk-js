@@ -1,6 +1,10 @@
 class Environment {
   get() {
-    if (window.location.hostname === 'localhost' || /\-local\.mixmax\.com\./.test(window.location.hostname)) {
+    // Not sure how to toggle a local vs production environment.
+    // This is specifically relevant when testing the SDK on non-Mixmax pages like localhost,
+    // since then you don't have the cue of "what environment is the Mixmax page using"
+    // to decide which environment the SDK should connect to.
+    if (window.location.hostname === 'localhost' || /\-local\.mixmax\.com$/.test(window.location.hostname)) {
       return Environment.LOCAL;
     } else {
       return Environment.PRODUCTION;
