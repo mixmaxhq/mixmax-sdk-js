@@ -6,7 +6,16 @@ const hasOwn = Object.prototype.hasOwnProperty;
 // On Travis, these tests will run using a login token for engtestuser8@mixmax.com. You can get a
 // JSON-formatted version of this cookie from a previous Sauce Labs session --look for a "POST
 // cookie" command. Then put it in an array and base64-encode it at the CLI e.g. using
-// `Buffer#toString('base64')`.
+// `new Buffer(JSON.stringify([<JSON from Sauce Labs>])).toString('base64')`.
+//
+// If you need to regenerate this cookie:
+//
+//   1. install a Chrome extension like EditThisCookie that will let you see HTTP-only cookies
+//   2. sign in as engtestuser8@mixmax.com
+//   3. update the `value` field of the cookie JSON with the value of the
+//      `mixmax_login_token_engtestuser8@mixmax.com_production` token
+//
+// Then encode it as above.
 const authCookies = JSON.parse(Buffer.from(process.env.AUTH_COOKIES, 'base64').toString());
 
 function firstOf(maybeArray, defaultValue=null) {
