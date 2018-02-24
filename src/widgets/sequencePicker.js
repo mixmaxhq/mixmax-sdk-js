@@ -10,12 +10,17 @@ function renderAddSequenceRecipientsButton(button) {
 
   const buttonUrl = `${Environment.composeUrl}/sequence/picker/button?version=${encodeURIComponent(Environment.version)}`;
   const pickerUrl = `${Environment.composeUrl}/sequence/picker?version=${encodeURIComponent(Environment.version)}`;
+  const originalDropdownTop = 8; // px
+  const dropdownBoxShadowYOffset = 1; // px
+  const dropdownBoxShadowBlurRadius = 15; // px
   const sequenceButton = document.createElement('div');
   sequenceButton.className = 'mixmax-add-to-sequence-wrapper  js-mixmax-add-to-sequence-wrapper';
   sequenceButton.innerHTML = `
     <iframe style="display:none;" class="mixmax-sequence-picker-button-iframe js-mixmax-sequence-picker-button-iframe"
       src="${buttonUrl}" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
-    <div class="mixmax-dropdown-sequences  js-mixmax-dropdown-sequences">
+    <div class="mixmax-dropdown-sequences  js-mixmax-dropdown-sequences"
+      style="top: ${originalDropdownTop}px;
+      box-shadow: 0 ${dropdownBoxShadowYOffset}px ${dropdownBoxShadowBlurRadius}px 1px rgba(10, 15, 20, 0.35);">
       <iframe class="mixmax-sequence-picker-iframe  js-mixmax-sequence-picker-iframe" src="${pickerUrl}"/>
     </div>
   `;
@@ -33,6 +38,18 @@ function renderAddSequenceRecipientsButton(button) {
 
   let latestRecipients;
   function buttonClicked() {
+    // Prevent the dropdown from getting clipped at the bottom by moving it up if necessary.
+    // First reset the offset so that if we had moved it up, we can try to move it down again.
+    dropdown.style.top = `${originalDropdownTop}px`;
+    const dropdownBoundingRect = dropdown.getBoundingClientRect();
+    // https://stackoverflow.com/a/36799652/495611 to include the box shadow. Unclear if the spread
+    // height needs to be included? Looks fine without though.
+    const dropdownBoundingHeight = dropdownBoundingRect.height + dropdownBoxShadowYOffset + Math.ceil(dropdownBoxShadowBlurRadius / 2);
+    const dropdownOffsetY = document.documentElement.clientHeight - (dropdownBoundingRect.top + dropdownBoundingHeight);
+    if (dropdownOffsetY < 0) {
+      dropdown.style.top = `${originalDropdownTop + dropdownOffsetY}px`;
+    }
+
     dropdown.classList.add('mixmax-opened');
 
     getRecipientsFunction((recipients) => {

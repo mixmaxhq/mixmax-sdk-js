@@ -8,11 +8,10 @@
   width: 320px;
   background-color: white;
   z-index: 1;
-  top: 8px;
   left: 0;
   overflow: hidden;
   border-radius: 2px;
-  box-shadow: 0 1px 15px 1px rgba(10, 15, 20, 0.35);
+  /* Note: `top` and `box-shadow` set as inline styles for reasons of positioning. */
   opacity: 0;
   pointer-events: none;
 }
