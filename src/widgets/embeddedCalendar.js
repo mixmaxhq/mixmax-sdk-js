@@ -33,7 +33,7 @@ function renderEmbeddedCalendar(el) {
    * Ensure that the height is large enough that we can show the entire booking form with margin at
    * the bottom.
    */
-  if (height.endsWith('px')) {
+  if (/px$/.test(height)) {
     const heightAsNum = parseInt(height.split('px')[0], 10);
     if (heightAsNum < 580) throw new Error('Mixmax calendar height must be at least 580px.');
   }
