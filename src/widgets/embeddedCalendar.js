@@ -41,9 +41,16 @@ function renderEmbeddedCalendar(el) {
   const encodedVersion = encodeURIComponent(Environment.version);
   const src = `https://cal.mixmax.com/${userCalLink}/${calLink}?sdkV=${encodedVersion}`;
 
-  el.innerHTML = `<iframe
+  /**
+   * Replace the element with a div so that we know what we know what we're being wrapped by and
+   * clean up the configuration specified by the widget's host.
+   */
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = `<iframe
       frameBorder="0"
       style="width: ${width}; height: ${height};"
       src="${src}"
     ></iframe>`;
+  el.parentNode.insertBefore(wrapper, el);
+  el.parentNode.removeChild(el);
 }
