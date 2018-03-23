@@ -1,5 +1,4 @@
 const _ = require('underscore');
-const argv = require('yargs').argv;
 const awspublish = require('gulp-awspublish');
 const awspublishRouter = require('gulp-awspublish-router');
 const babel = require('rollup-plugin-babel');
