@@ -6,6 +6,7 @@ import '/utils/polyfills';
 import { Promise } from 'es6-promise';
 
 import loadSequencePickers from '/widgets/sequencePicker';
+import loadEmbeddedCalendars from '/widgets/embeddedCalendar';
 
 // Utils
 const loadCSS = once(() => {
@@ -43,6 +44,7 @@ export function load() {
     documentReady()
   ]).then(() => {
     loadSequencePickers();
+    loadEmbeddedCalendars();
   });
 }
 
