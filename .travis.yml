@@ -13,8 +13,7 @@ node_js: 6.9.1
 cache: yarn
 
 # Don’t build pushes except on tagged commits, for releases, and master, as it seems is required to
-# enable PR builds from https://mail.mixmax.com/m/RLhrkAAxQCA6YAOv1 and from
-# https://travis-ci.org/mixmaxhq/mixmax-sdk-js/requests. If we allowed arbitrary branches,
+# enable PR builds from https://mail.mixmax.com/m/YmhZwv5k4v5GKOVV2. If we allowed arbitrary branches,
 # Travis would run both PR builds _and_ branch builds for PRs, making integration tests twice as
 # slow since we only pay for one concurrent build in Sauce.
 #
