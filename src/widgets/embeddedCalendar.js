@@ -39,7 +39,7 @@ function renderEmbeddedCalendar(el) {
   }
 
   const encodedVersion = encodeURIComponent(Environment.version);
-  const src = `https://cal.mixmax.com/${userCalLink}/${calLink}?sdkV=${encodedVersion}`;
+  const src = `${Environment.calendarUrl}/${userCalLink}/${calLink}?sdkV=${encodedVersion}`;
 
   /**
    * Replace the element with a div so that we know what we know what we're being wrapped by and
