@@ -61,3 +61,12 @@ SDK and publishing the new version of the package to npm as well as to the CDN.
 CDN releases will be scoped under the directory `/v${VERSION}`. For instance,
 if you just released version 1.2.1, the overall UMD bundle will be available at
 https://sdk.mixmax.com/v1.2.1/Mixmax.umd.js.
+
+After you release a new version of the SDK, please update the following locations in the product
+that reference a particular version of the SDK so that users will know to install the newer
+version:
+
+* The "Share your link" flyout in meeting types, which shares code for calendar embeeding
+
+^ We should automate this in the future, perhaps by fetching the latest, acceptable SDK version
+from an API.

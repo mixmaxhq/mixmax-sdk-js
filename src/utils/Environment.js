@@ -31,6 +31,14 @@ class Environment {
     // Will leave it to the developer to temporarily edit the source for now.
     return 'https://compose.mixmax.com';
   }
+
+  get calendarUrl() {
+    if (this.is(Environment.PRODUCTION)) {
+      return 'https://cal.mixmax.com';
+    } else {
+      return 'https://cal-local.mixmax.com';
+    }
+  }
 }
 
 // When running from a client's website or Cloudfront.

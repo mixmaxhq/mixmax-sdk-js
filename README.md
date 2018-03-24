@@ -8,7 +8,8 @@ It exports a top level module called `Mixmax`, with submodules
 * `Mixmax.editor`: APIs for managing the lifecycle of a [Mixmax enhancement]'s editor as documented
 [here][Mixmax.editor docs].
 * `Mixmax.widgets`: APIs for embedding Mixmax functionality in your own website, currently the
-sequence picker as documented [here][sequence picker docs].
+sequence picker as documented [here][sequence picker docs] and the embedded calendar as documented
+[here][embedded cal docs].
 * `Mixmax.sidebar`: APIs for integrating your website into the Mixmax sidebar as documented
 [here][Mixmax.sidebar docs].
 * `Mixmax.analytics`: APIs for tracking recipients of your Mixmax emails on your website
@@ -19,6 +20,7 @@ If you are interested in contributing to this repo, see [here][CONTRIBUTING.md].
 [Mixmax enhancement]: https://developer.mixmax.com/docs/overview-enhancement
 [Mixmax.editor docs]: https://developer.mixmax.com/docs/overview-enhancement#sdkjs
 [sequence picker docs]: https://developer.mixmax.com/docs/sequences-picker
+[embedded cal docs]: https://developer.mixmax.com/docs/embedded-calendar
 [Mixmax.sidebar docs]: https://developer.mixmax.com/docs/sidebars
 [Mixmax.analytics docs]: https://developer.mixmax.com/docs/analytics
 [CONTRIBUTING.md]: CONTRIBUTING.md
