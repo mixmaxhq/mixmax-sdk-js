@@ -1,5 +1,7 @@
 ## Release History
 
+* 1.5.0 Add support for calendar embeddability.
+
 * 1.4.0 Added Mixmax.analytics namespace
 
 * 1.3.0 Add an SDK for building sidebar integrations
