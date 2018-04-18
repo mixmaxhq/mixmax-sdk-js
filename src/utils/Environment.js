@@ -33,11 +33,8 @@ class Environment {
   }
 
   get calendarUrl() {
-    if (this.is(Environment.PRODUCTION)) {
-      return 'https://cal.mixmax.com';
-    } else {
-      return 'https://cal-local.mixmax.com';
-    }
+    // Edit source to toggle local vs. production calendar.
+    return 'https://cal.mixmax.com';
   }
 }
 
