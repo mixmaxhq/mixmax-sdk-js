@@ -1,5 +1,7 @@
 ## Release History
 
+* 1.5.2 Always point embedded calendar to production domain.
+
 * 1.5.1 Bump version to work around publishing issue.
 
 * 1.5.0 Add support for calendar embeddability.
