@@ -4,6 +4,11 @@ Run `yarn start` to build the JS and run the web server locally. Also make sure 
 [our web proxy](https://github.com/mixmaxhq/mixmax-runner/) running. Then point local Mixmax apps to use
 the snippet at path `https://sdk-local.mixmax.com/dist/editor.umd.js`.
 
+Note that locally means your local mixmax-sdk-js server, but embedded calendars and sequence pickers
+will point to their production domains.  Developers can edit
+[source](https://github.com/mixmaxhq/mixmax-sdk-js/blob/master/src/utils/Environment.js) to point to
+the local domains instead.
+
 ## File structure
 
 `/src/` - Source JS that is built to form the current version of the SDK.
