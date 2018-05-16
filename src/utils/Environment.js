@@ -22,10 +22,6 @@ class Environment {
     }
   }
 
-  get analyticsUrl() {
-    return 'https://analytics.mixmaxusercontent.com';
-  }
-
   get composeUrl() {
     // Not sure how to toggle a local vs. production environment.
     // Will leave it to the developer to temporarily edit the source for now.

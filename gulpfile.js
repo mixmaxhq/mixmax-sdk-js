@@ -90,7 +90,6 @@ const build = new MultiBuild({
   targets: formatTargets([
     'Mixmax',
     'editor',
-    'analytics',
     'widgets',
     'sidebar'
   ]),

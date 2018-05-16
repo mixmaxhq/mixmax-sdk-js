@@ -12,8 +12,6 @@ sequence picker as documented [here][sequence picker docs] and the embedded cale
 [here][embedded cal docs].
 * `Mixmax.sidebar`: APIs for integrating your website into the Mixmax sidebar as documented
 [here][Mixmax.sidebar docs].
-* `Mixmax.analytics`: APIs for tracking recipients of your Mixmax emails on your website
-[here][Mixmax.analytics docs].
 
 If you are interested in contributing to this repo, see [here][CONTRIBUTING.md].
 
@@ -22,5 +20,4 @@ If you are interested in contributing to this repo, see [here][CONTRIBUTING.md].
 [sequence picker docs]: https://developer.mixmax.com/docs/sequences-picker
 [embedded cal docs]: https://developer.mixmax.com/docs/embedded-calendar
 [Mixmax.sidebar docs]: https://developer.mixmax.com/docs/sidebars
-[Mixmax.analytics docs]: https://developer.mixmax.com/docs/analytics
 [CONTRIBUTING.md]: CONTRIBUTING.md
