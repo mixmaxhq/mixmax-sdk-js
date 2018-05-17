@@ -1,5 +1,7 @@
 ## Release History
 
+* 2.0.0 Removed Mixmax.analytics namespace since we removed support for Mixmax Analytics feature.
+
 * 1.5.2 Always point embedded calendar to production domain.
 
 * 1.5.1 Bump version to work around publishing issue.
