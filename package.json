@@ -17,7 +17,7 @@
     "test": "NODE_ENV=test gulp test:e2e",
     "build": "gulp build",
     "upload": "env NODE_ENV=production gulp upload",
-    "ci": "yarn test"
+    "ci": "npm test"
   },
   "repository": {
     "type": "git",
@@ -70,5 +70,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "yarn": "YARN NO LONGER USED - use npm instead."
   }
 }
