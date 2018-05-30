@@ -8,9 +8,14 @@ addons:
   sauce_connect: true
 
 language: node_js
-node_js: 6.9.1
 
-cache: yarn
+node_js: 8.9.3
+
+cache:
+  directories:
+    # Location of npm cache per https://docs.npmjs.com/cli/cache#cache. Shared by npx per
+    # https://github.com/zkat/npx/tree/6e89dbd5989366e52d3810692b1ab5889a05fbad#description.
+    - $HOME/.npm
 
 # Don’t build pushes except on tagged commits, for releases, and master, as it seems is required to
 # enable PR builds from https://mail.mixmax.com/m/YmhZwv5k4v5GKOVV2. If we allowed arbitrary branches,
@@ -24,7 +29,10 @@ branches:
     - master
     - /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
-script: 'yarn ci'
+install:
+  - npx npm@$NPM_VERSION ci
+
+script: npm run ci
 
 deploy:
   - provider: script
