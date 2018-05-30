@@ -38,7 +38,7 @@ deploy:
   - provider: script
     # Prevent Travis from resetting the build artifacts.
     skip_cleanup: true
-    script: yarn upload
+    script: npm upload
     on:
       tags: true
   - provider: npm
