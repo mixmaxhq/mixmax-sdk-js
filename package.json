@@ -70,8 +70,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "engines": {
-    "yarn": "YARN NO LONGER USED - use npm instead."
   }
 }
