@@ -1,6 +1,6 @@
 ## Running locally
 
-Run `yarn start` to build the JS and run the web server locally. Also make sure you have
+Run `npm start` to build the JS and run the web server locally. Also make sure you have
 [our web proxy](https://github.com/mixmaxhq/mixmax-runner/) running. Then point local Mixmax apps to use
 the snippet at path `https://sdk-local.mixmax.com/dist/editor.umd.js`.
 
