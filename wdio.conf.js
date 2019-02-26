@@ -52,7 +52,7 @@ exports.config = {
         version: '11'
       }]
     }, {
-      // Explicitly support FF 45 for external integration testing.
+      // Explicitly support FF 45 for external integration testing as requested by flagship customer (Mixmax-only link: https://mail.mixmax.com/m/N2Yrpd7UzCeIXsFj9).
       platform: 'linux',
       browserName: 'firefox',
       version: '45'
