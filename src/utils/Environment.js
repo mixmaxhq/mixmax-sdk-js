@@ -15,16 +15,12 @@ class Environment {
   }
 
   get assetsUrl() {
-    if (this.is(Environment.PRODUCTION)) {
-      return `https://sdk.mixmax.com/v${this.version}`;
-    } else {
-      return 'http://localhost:9000/dist';
-    }
+    // Edit source to toggle local vs. production assets.
+    return `https://sdk.mixmax.com/v${this.version}`;
   }
 
   get composeUrl() {
-    // Not sure how to toggle a local vs. production environment.
-    // Will leave it to the developer to temporarily edit the source for now.
+    // Edit source to toggle local vs. production compose.
     return 'https://compose.mixmax.com';
   }
 
