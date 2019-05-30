@@ -1,8 +1,10 @@
 ## Release History
 
-* 1.5.4 Use assets in production for local development (#32)
+* 2.0.1 Republish 1.5.4 as 2.0.1
 
 * 2.0.0 Removed Mixmax.analytics namespace since we removed support for Mixmax Analytics feature.
+
+* 1.5.4 Use assets in production for local development (#32)
 
 * 1.5.3 Remove yarn.
 
