@@ -1,5 +1,7 @@
 ## Release History
 
+* 2.0.2 Improve webpack support for `browser` map
+
 * 2.0.1 Republish 1.5.4 as 2.0.1
 
 * 2.0.0 Removed Mixmax.analytics namespace since we removed support for Mixmax Analytics feature.
