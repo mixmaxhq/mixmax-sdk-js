@@ -5,9 +5,9 @@
   "main": "dist/Mixmax.umd.js",
   "module": "dist/Mixmax.es.js",
   "browser": {
-    "./editor": "dist/editor.es.js",
-    "./widgets": "dist/widgets.es.js",
-    "./sidebar": "dist/sidebar.es.js"
+    "./editor": "./dist/editor.es.js",
+    "./widgets": "./dist/widgets.es.js",
+    "./sidebar": "./dist/sidebar.es.js"
   },
   "files": [
     "dist"
