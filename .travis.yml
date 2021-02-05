@@ -17,17 +17,10 @@ cache:
     # https://github.com/zkat/npx/tree/6e89dbd5989366e52d3810692b1ab5889a05fbad#description.
     - $HOME/.npm
 
-# Don’t build pushes except on tagged commits, for releases, and master, as it seems is required to
-# enable PR builds from https://mail.mixmax.com/m/YmhZwv5k4v5GKOVV2. If we allowed arbitrary branches,
-# Travis would run both PR builds _and_ branch builds for PRs, making integration tests twice as
-# slow since we only pay for one concurrent build in Sauce.
-#
-# Note that it is not possible, unfortunately, to only build tags when they hit master:
-# https://mail.mixmax.com/m/M5yCPDkGsE3RDkbex We'll just have to only tag on master vs. branches.
+# Only build when merged to master
 branches:
   only:
     - master
-    - /^v[0-9]+\.[0-9]+\.[0-9]+$/
 
 install:
   - npx npm@$NPM_VERSION ci

@@ -1,8 +1,0 @@
-{
-  "extends": "mixmax/node/spec",
-  "globals": {
-    "browser": true,
-    "$": true,
-    "$$": true
-  }
-}
