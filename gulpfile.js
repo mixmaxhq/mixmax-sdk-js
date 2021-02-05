@@ -16,7 +16,6 @@ const rootImport = require('rollup-plugin-root-import');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify-es').default;
-const webdriver = require('gulp-webdriver');
 const waitFor = require('gulp-waitfor');
 const request = require('request');
 
@@ -206,37 +205,6 @@ gulp.task('webserver', function() {
     }));
 });
 
-
-gulp.task('webdriver', function() {
-  return gulp
-    .src('wdio.conf.js')
-    // Repeatedly attempt to connect to the gulp-webserver. Gives up after a minute, by default.
-    // This ensures that our sauce labs tests can reach the webserver.
-    .pipe(waitFor((cb) => {
-      request({
-        url: 'http://localhost:9000',
-        method: 'HEAD',
-        timeout: 5 * 1000
-      }, (err, res) => {
-        cb(!err && res.statusCode === 200);
-      });
-    }))
-    .pipe(webdriver())
-    .on('end', function() {
-      // If the stream ends, kill the webserver. We do this in particular for test:e2e, where the
-      // webdriver will fail if the tests fail. When this happens, we want to have gulp exit,
-      // because the testing is over.
-      ws.emit('kill');
-    });
-});
-
-
-gulp.task('test:e2e', function(cb) {
-  runSequence(
-    'build',
-    ['webserver', 'webdriver'],
-    cb);
-});
 
 
 // The default task (called when you run `gulp` from cli)
