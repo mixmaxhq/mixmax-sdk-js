@@ -1,5 +1,9 @@
 ## Release History
 
+* 2.0.5 Fixed widget loading [#40](https://github.com/mixmaxhq/mixmax-sdk-js/pull/40)
+
+* 2.0.3 - 2.0.4: Ignore
+
 * 2.0.2 Improve webpack support for `browser` map
 
 * 2.0.1 Republish 1.5.4 as 2.0.1
