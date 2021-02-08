@@ -22,8 +22,12 @@ const loadCSS = once(() => {
 
 const documentReady = once(() => {
   return new Promise((resolve) => {
-    if (document.readyState === 'complete') resolve();
-    else window.addEventListener('DOMContentLoaded', resolve);
+    const domContentAlreadyTriggered = document.readyState === 'interactive' || document.readyState === 'complete';
+    if (domContentAlreadyTriggered) {
+      resolve();
+    } else {
+      window.addEventListener('DOMContentLoaded', resolve);
+    }
   });
 });
 
