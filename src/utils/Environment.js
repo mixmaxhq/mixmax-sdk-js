@@ -1,6 +1,6 @@
 class Environment {
   get() {
-    if (window.location.hostname === 'localhost') return Environment.LOCAL;
+    if (window.location.hostname === 'sdk-local.mixmax.com') return Environment.LOCAL;
     else return Environment.PRODUCTION;
   }
 
@@ -15,8 +15,11 @@ class Environment {
   }
 
   get assetsUrl() {
-    // Edit source to toggle local vs. production assets.
-    return `https://sdk.mixmax.com/v${this.version}`;
+    if (this.is(Environment.LOCAL)) {
+      return 'http://localhost:9000/dist';
+    } else {
+      return `https://sdk.mixmax.com/v${this.version}`;
+    }
   }
 
   get composeUrl() {
