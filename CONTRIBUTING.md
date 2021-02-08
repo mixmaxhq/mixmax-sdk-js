@@ -31,15 +31,15 @@ Note that certain targets may be disabled pending browser support; see [here](ht
 
 ## Deployment (for Mixmax engineers)
 
-Run [`npm-publish`](https://github.com/mixmaxhq/mixmax-runner/blob/master/scripts/npm-publish)
-_with the `--no-publish` flag_.
-
-Travis will respond to the new tag being pushed to the remote by building the
-SDK and publishing the new version of the package to npm as well as to the CDN.
+1. Run `npm version <next version string>`
+2. Update CHANGELOG.md and commit
+3. Run `git push --follow-tags`
+4. Run `npm publish`
+5. Run `npm run upload`
 
 CDN releases will be scoped under the directory `/v${VERSION}`. For instance,
-if you just released version 1.2.1, the overall UMD bundle will be available at
-https://sdk.mixmax.com/v1.2.1/Mixmax.umd.js.
+if you just released version 2.0.6, the overall UMD bundle will be available at
+https://sdk.mixmax.com/v2.0.0/widgets.umd.min.js.
 
 After you release a new version of the SDK, please update the following locations in the product
 that reference a particular version of the SDK so that users will know to install the newer
