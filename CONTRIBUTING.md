@@ -1,13 +1,8 @@
 ## Running locally
 
-1. Add the following entry to your `/etc/hosts/` file (Mixmax internal note: this is already added by `mixmax-runner`):
-```
-127.0.0.1 sdk-local.mixmax.com
-```
+1. Run `npm start` to build the JS and run the web server locally
 
-2. Run `npm start` to build the JS and run the web server locally
-
-3. Load https://sdk-local.mixmax.com/examples/embeddedcalendar/index.html. You should see the embedded calendar loading.
+2. Load https://sdk-local.mixmax.com/examples/embeddedcalendar/index.html. You should see the embedded calendar loading.
 
 Note that _locally_ means your local mixmax-sdk-js server, but embedded calendars and sequence pickers
 will point to their production domains. Mixmax internal note: edit
@@ -46,6 +41,7 @@ that reference a particular version of the SDK so that users will know to instal
 version:
 
 * The "Share your link" flyout in meeting types, which shares code for calendar embeeding
+* Developer documention page https://developer.mixmax.com/docs/introduction-widget-sdk
 
 ^ We should automate this in the future, perhaps by fetching the latest, acceptable SDK version
 from an API.

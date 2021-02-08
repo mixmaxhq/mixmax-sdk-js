@@ -201,7 +201,11 @@ gulp.task('webserver', function() {
   ws = gulp.src('.')
     .pipe(webserver({
       directoryListing: true,
-      port: 9000
+      // Pick an uncommon port number that local developers won't be using. If they happen to be
+      // using the production Mixmax SDK and developing something else locally on this port, then
+      // our environment check in Environment.js will think the SDK is running locally and it
+      // won't work.
+      port: 64969 // MIXMX on a T9 keypad ;)
     }));
 });
 
