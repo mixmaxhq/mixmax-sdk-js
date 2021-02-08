@@ -1,6 +1,6 @@
 {
   "name": "@mixmaxhq/sdk",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Our client-side SDK.",
   "main": "dist/Mixmax.umd.js",
   "module": "dist/Mixmax.es.js",
@@ -17,7 +17,6 @@
     "build": "gulp build",
     "upload": "env NODE_ENV=production gulp upload",
     "ci": "exit 0"
-
   },
   "repository": {
     "type": "git",
