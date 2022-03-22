@@ -11,14 +11,6 @@ class Sidebar extends EventEmitter {
   constructor() {
     super();
 
-    Host.on('beforeContactSelected', () => {
-      const e = new Event();
-      this.emit('beforeContactSelected', e);
-      Host.send('ackBeforeContactSelected', {
-        isDefaultPrevented: e.isDefaultPrevented
-      });
-    });
-
     Host.on('heartbeat', () => {
       Host.send('heartbeat');
     });
