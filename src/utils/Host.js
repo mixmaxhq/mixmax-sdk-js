@@ -8,9 +8,6 @@ class Host extends EventEmitter {
   constructor() {
     super();
 
-    this._hostOrigin = null;
-    this._messageQueue = [];
-
     window.addEventListener('message', this._onMessage.bind(this));
   }
 
@@ -24,8 +21,7 @@ class Host extends EventEmitter {
    *   having to change existing message listeners.
    */
   send(method, payload) {
-    this._messageQueue.push({ method, payload });
-    this._maybeFlushMessages();
+    window.parent.postMessage({ method, payload }, '*');
   }
 
   _onMessage(e) {
@@ -35,37 +31,7 @@ class Host extends EventEmitter {
     // Safety belts.
     if (!e.data) return;
 
-    switch (e.data.method) {
-      // Handle internal methods first.
-      case 'setOrigin':
-        // Let the Mixmax host tell us its origin vs. hardcoding app.mixmax.com (that might change
-        // in the future).
-        this._setHostOrigin(e.data.payload.origin);
-        break;
-
-      // Proxy all other methods to the application.
-      default:
-        this.emit(e.data.method, e.data.payload);
-        break;
-    }
-  }
-
-  _maybeFlushMessages() {
-    // Wait until the Mixmax host has told us its origin before messaging, so that we can lock
-    // the target origin, for security reasons.
-    if (!this._hostOrigin) return;
-
-    this._messageQueue.forEach((message) => {
-      window.parent.postMessage(message, this._hostOrigin);
-    });
-    this._messageQueue = [];
-  }
-
-  _setHostOrigin(origin) {
-    if (this._hostOrigin) throw new Error('Host origin is already set');
-
-    this._hostOrigin = origin;
-    this._maybeFlushMessages();
+    this.emit(e.data.method, e.data.payload);
   }
 }
 
