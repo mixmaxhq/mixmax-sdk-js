@@ -19,7 +19,13 @@ class Sidebar extends EventEmitter {
       });
     });
 
-    Host.on('contactSelected', (contact) => this.emit('contactSelected', contact));
+    Host.on('heartbeat', () => {
+      Host.send('heartbeat');
+    });
+
+    Host.on('contactSelected', (contact) =>
+      this.emit('contactSelected', contact)
+    );
 
     Host.on('clear', () => this.emit('clear'));
   }
