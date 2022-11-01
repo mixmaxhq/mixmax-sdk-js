@@ -41,7 +41,7 @@
     "detonate-object": "^0.1.1",
     "eslint": ">=3",
     "eslint-config-mixmax": "^0.10.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-awspublish": "^3.3.0",
     "gulp-awspublish-router": "^0.1.1",
     "gulp-if": "^2.0.2",
