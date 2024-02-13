@@ -1,5 +1,7 @@
 ## Release History
 
+- 2.1.0 Added support for the Mixmax Outlook Add-In
+
 - 2.0.7 Fixed bug where a custom sidebar refreshes [#47](https://github.com/mixmaxhq/mixmax-sdk-js/pull/46)
 
 - 2.0.6 Ignore
