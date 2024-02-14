@@ -1,3 +1,4 @@
+/* global Office */
 /**
  * The Mixmax App JS SDK. See documentation at http://sdk.mixmax.com
  */
@@ -7,12 +8,15 @@
  * that are to be used to create an app instance.
  */
 export function done(params) {
-  if (!window.opener) return;
-
-  window.opener.postMessage({
-    method: 'done',
-    payload: params
-  }, '*' /* Could be to the app dashboard or to a composer */ );
+  if (window['Office'] && Office.context && Office.context.ui && Office.context.ui.messageParent) {
+    // We're in outlook; send the message there
+    Office.context.ui.messageParent(JSON.stringify(params));
+  } else if (window.opener) {
+    window.opener.postMessage({
+      method: 'done',
+      payload: params
+    }, '*' /* Could be to the app dashboard or to a composer */ );
+  }
 
   window.close();
 }
